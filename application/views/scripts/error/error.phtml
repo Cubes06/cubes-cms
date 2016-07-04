@@ -1,0 +1,32 @@
+<div id="highlighted">
+    <div class="container">
+
+    </div>
+</div>
+<div id="content"> 
+    <div class="container">
+        <div class="jumbotron">
+            <h1><?php echo $this->message ?></h1>
+            <p>An error occured</p>
+            <p><a class="btn btn-primary btn-lg" href="<?php echo $this->baseUrl('/'); ?>" role="button">Home</a></p>
+        </div>
+        <?php if (isset($this->exception)): ?>
+
+            <h3>Exception information:</h3>
+            <p>
+                <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+            </p>
+
+            <h3>Stack trace:</h3>
+            <pre>
+                <?php echo $this->exception->getTraceAsString() ?>
+            </pre>
+
+            <h3>Request Parameters:</h3>
+            <pre>
+                <?php echo $this->escape(var_export($this->request->getParams(), true)) ?>
+            </pre>
+
+        <?php endif ?>
+    </div>
+</div>

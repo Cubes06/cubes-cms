@@ -1,0 +1,92 @@
+<?php
+$this->headTitle('About Us');
+?>
+
+
+<div id="highlighted">
+    <div class="container">
+        <div class="header">
+            <h2 class="page-title">
+                <span>About Us</span> 
+                <small>Find out who makes us tick</small>
+            </h2>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div class="container">
+        <!-- About -->
+        <div class="row">
+            <div class="col-md-8">
+                <!-- About company -->
+                <div class="block">
+                    <h3 class="block-title sub-title">
+                        How It All Began
+                    </h3>
+                    <p>Elit pellentesque dolor facilisis aenean eu tempor, phasellus lundium risus dolor, augue, ridiculus nascetur odio ridiculus? Hac ac, adipiscing ut dapibus. Adipiscing cras in? Magna nisi augue odio! Pellentesque magnis? Lacus integer magnis purus sed mus lorem aliquam lectus, placerat pellentesque quis, nunc urna turpis lorem. Etiam velit, augue sed magnis placerat! In cras, dignissim lorem, porttitor in velit in, nisi vut a cursus cum, odio sagittis nisi turpis? Mus penatibus non, pulvinar porttitor arcu hac ut et ac integer? Ultricies est etiam sit. Urna ridiculus facilisis pulvinar, ultrices augue? Parturient velit non tincidunt sit sagittis pulvinar phasellus rhoncus hac! Sit porta. Tristique, hac. Porttitor adipiscing ac. Ac tincidunt a porttitor natoque auctor ultricies! Proin nunc scelerisque? Habitasse adipiscing? Cursus.</p>
+                    <h3 class="block-title sub-title">
+                        Our Philosophy
+                    </h3>
+                    <p>Elit pellentesque dolor facilisis aenean eu tempor, phasellus lundium risus dolor, augue, ridiculus nascetur odio ridiculus? Hac ac, adipiscing ut dapibus. Adipiscing cras in? Magna nisi augue odio! Pellentesque magnis? Lacus integer magnis purus sed mus lorem aliquam lectus, placerat pellentesque quis, nunc urna turpis lorem. Etiam velit, augue sed magnis placerat! In cras, dignissim lorem, porttitor in velit in, nisi vut a cursus cum, odio sagittis nisi turpis? Mus penatibus non, pulvinar porttitor arcu hac ut et ac integer? Ultricies est etiam sit. Urna ridiculus facilisis pulvinar, ultrices augue? Parturient velit non tincidunt sit sagittis pulvinar phasellus rhoncus hac! Sit porta. Tristique, hac. Porttitor adipiscing ac. Ac tincidunt a porttitor natoque auctor ultricies! Proin nunc scelerisque? Habitasse adipiscing? Cursus.</p>
+                    <h3 class="block-title sub-title">
+                        What's In A Name?
+                    </h3>
+                    <p>Elit pellentesque dolor facilisis aenean eu tempor, phasellus lundium risus dolor, augue, ridiculus nascetur odio ridiculus? Hac ac, adipiscing ut dapibus. Adipiscing cras in? Magna nisi augue odio! Pellentesque magnis? Lacus integer magnis purus sed mus lorem aliquam lectus, placerat pellentesque quis, nunc urna turpis lorem. Etiam velit, augue sed magnis placerat! In cras, dignissim lorem, porttitor in velit in, nisi vut a cursus cum, odio sagittis nisi turpis? Mus penatibus non, pulvinar porttitor arcu hac ut et ac integer? Ultricies est etiam sit. Urna ridiculus facilisis pulvinar, ultrices augue? Parturient velit non tincidunt sit sagittis pulvinar phasellus rhoncus hac! Sit porta. Tristique, hac. Porttitor adipiscing ac. Ac tincidunt a porttitor natoque auctor ultricies! Proin nunc scelerisque? Habitasse adipiscing? Cursus.</p>
+                </div>
+                <!-- The team -->
+                <div class="block margin-top-large">
+                    <h3 id="team" class="block-title">
+                        <span>Meet The Team</span>
+                    </h3>
+                    
+                    <div class="row">
+                        <ul class="thumbnails list-unstyled team">
+                            <?php
+                                $i = 0;
+                                foreach ($this->members as $member) {
+                                    if($i % 4 === 0) { ?>
+                                            </ul>
+                                        </div>
+                                        <div class="row">
+                                            <ul class="thumbnails list-unstyled team">
+                                    <?php }
+                                    $i++;
+                                    $memberUrl = $this->baseUrl('/aboutus/member/id/' . $member['id']);
+                                    $memberImgUrl = $this->memberImgUrl($member);
+                                    ?>
+                                    <li class="col-sm-6 col-md-3">
+                                       <a 
+                                           href="<?php echo $memberUrl; ?>"
+                                        >
+                                           <img alt="<?php echo $this->escape($member["first_name"]); ?>" class="img-polaroid" src="<?php echo $memberImgUrl; ?>">
+                                       </a>
+                                       <h4>
+                                           <a 
+                                               data-original-title="<?php echo $this->escape($member["first_name"] . ' ' . $member['last_name']); ?>" 
+                                               data-content="<?php echo $this->escape($member["work_title"]); ?>" 
+                                               class="_popover" 
+                                               href="<?php echo $memberUrl; ?>"
+                                            ><?php echo $this->escape($member["first_name"]); ?></a>
+                                       </h4>
+                                   </li>
+                            <?php } ?>
+                    
+                        </ul>
+                    </div>
+                    
+                    
+                   
+                </div>
+            </div>
+            <!-- sidebar -->
+            <div class="col-md-4 sidebar sidebar-right">
+                <div class="inner">
+                    <div class="block mdrs">
+                        <a class="btn btn-block btn-info" href="#"><i class="fa fa-download"></i> Download Our Press Kit</a>
+                        <a class="btn btn-block btn-success" href="<?php echo $this->baseUrl('/contact'); ?>"><i class="fa fa-envelope-o"></i> Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

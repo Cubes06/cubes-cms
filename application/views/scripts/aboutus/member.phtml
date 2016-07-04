@@ -1,0 +1,98 @@
+<?php
+    $member = $this->member;
+    $this->headTitle('Member ' . $member["first_name"] . " " . $member["last_name"]);
+?>
+
+<div id="highlighted">
+    <div class="container">
+        <div class="header">
+            <h2 class="page-title">
+                <span>About Us</span> 
+                <small> <?php echo $this->escape('Member ' . $member["first_name"] . " " . $member["last_name"]); ?> </small>
+            </h2>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div class="container">
+        <!-- About -->
+        <div class="row">
+            <div class="col-md-8">
+                <!-- About company -->
+                <div class="row team-member">
+                    <div class="col-sm-3">
+                        <img alt="<?php echo $this->escape($member["first_name"]); ?>" class="img-polaroid" src="<?php echo $this->memberImgUrl($member); ?>">
+                    </div>
+                    <div class="col-sm-9">
+                        <h3>
+                             <?php echo $this->escape($member["first_name"] . " " . $member["last_name"]); ?> 
+                        </h3>
+                        <h5>
+                             <?php echo $this->escape($member["work_title"]); ?> 
+                        </h5>
+                        <p> <?php echo $this->escape($member["resume"]); ?>  </p>
+                        <div class="social-media bordered-top-medium">
+                            <a data-original-title="Twitter" data-placement="top" class="_tooltip" href="#"><i class="fa fa-twitter"></i></a>
+                            <a data-original-title="Facebook" data-placement="top" class="_tooltip" href="#"><i class="fa fa-facebook"></i></a>
+                            <a data-original-title="LinkedIn" data-placement="top" class="_tooltip" href="#"><i class="fa fa-linkedin"></i></a>
+                            <a data-original-title="Google +" data-placement="top" class="_tooltip" href="#"><i class="fa fa-google-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- The team -->
+                <div class="block margin-top-large">
+                    <h3 id="team" class="block-title">
+                        <span>Meet The Team</span>
+                    </h3>
+                    
+                    <div class="row">
+                        <ul class="thumbnails list-unstyled team">
+                            <?php
+                                $i = 0;
+                                foreach ($this->members as $member) {
+                                    if($i % 4 === 0) { ?>
+                                            </ul>
+                                        </div>
+                                        <div class="row">
+                                            <ul class="thumbnails list-unstyled team">
+                                    <?php }
+                                    $i++;
+                                    $memberUrl = $this->baseUrl('/aboutus/member/id/' . $member['id']);
+                                    ?>
+                                    <li class="col-sm-6 col-md-3">
+                                       <a 
+                                           href="<?php echo $memberUrl; ?>"
+                                        >
+                                           <img alt="<?php echo $this->escape($member["first_name"]); ?>" class="img-polaroid" src="<?php echo $this->memberImgUrl($member); ?>">
+                                       </a>
+                                       <h4>
+                                           <a 
+                                               data-original-title="<?php echo $this->escape($member["first_name"] . ' ' . $member['last_name']); ?>" 
+                                               data-content="<?php echo $this->escape($member["work_title"]); ?>" 
+                                               class="_popover" 
+                                               href="<?php echo $memberUrl; ?>"
+                                            ><?php echo $this->escape($member["first_name"]); ?></a>
+                                       </h4>
+                                   </li>
+                            <?php } ?>
+                    
+                        </ul>
+                    </div>
+                    
+                    
+                   
+                </div>
+                
+            </div>
+            <!-- sidebar -->
+            <div class="col-md-4 sidebar sidebar-right">
+                <div class="inner">
+                    <div class="block mdrs">
+                        <a class="btn btn-block btn-info" href="#"><i class="fa fa-download"></i> Download Our Press Kit</a>
+                        <a class="btn btn-block btn-success" href="<?php echo $this->baseUrl('/contact'); ?>"><i class="fa fa-envelope-o"></i> Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
