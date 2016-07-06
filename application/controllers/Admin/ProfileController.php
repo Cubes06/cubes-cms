@@ -77,6 +77,7 @@
         }
 
         public function changepasswordAction() {
+            $form = new Application_Form_Admin_ProfileEdit();
 
         }
         
