@@ -69,7 +69,7 @@
                         // Smestanje kompletnog reda iz tabele cms_users kao identifikator da je korisnik ulogovan
                         // Po defaultu se smesta samo username, a ovako smestamo asocijativni niz, tj. row iz tabele
                         // Asocijativni niz $user ima kljuceve koji su u stvari nazivi kolona u tableli cms_users
-                        $user = $authAdapter->getResultRowObject();
+                        $user = (array) $authAdapter->getResultRowObject();
                         $auth->getStorage()->write($user);
                         
                         $redirector = $this->getHelper('Redirector');

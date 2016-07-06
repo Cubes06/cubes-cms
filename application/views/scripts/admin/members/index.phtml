@@ -52,7 +52,13 @@
                                         <td> <?php echo $this->escape($member['email']); ?> </td>
                                         <td class="text-center">
                                             <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                                <a type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'aboutus', 'action' => 'member', 'id' => $member['id']), 'default', true) ?> "
+                                                    target="_blank"
+                                                    type="button" class="btn btn-default" title="preview"><i class="glyphicon glyphicon-eye-close"></i></a>
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'admin_members', 'action' => 'edit', 'id' => $member['id']), 'default', true) ?> "
+                                                    type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                                 <button type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
                                             </div>
                                         </td>
@@ -69,7 +75,13 @@
                                         <td> <?php echo $this->escape($member['email']); ?> </td>
                                         <td class="text-center">
                                             <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                                <a type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'aboutus', 'action' => 'member', 'id' => $member['id']), 'default', true) ?> "
+                                                    target="_blank"
+                                                    type="button" class="btn btn-default" title="preview"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'admin_members', 'action' => 'edit', 'id' => $member['id']), 'default', true) ?> "
+                                                    type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                                 <button type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
                                             </div>
                                         </td>

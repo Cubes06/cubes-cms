@@ -1,4 +1,5 @@
 <?php
+    //stiti svaki kontroler koji se nalazi u admin delu
 
     class Application_Plugin_Admin extends Zend_Controller_Plugin_Abstract {
         

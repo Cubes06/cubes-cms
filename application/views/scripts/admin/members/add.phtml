@@ -168,7 +168,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="new_member_cancel"></label>
                             <div class="col-md-4 text-right">
-                                <button id="new_member_cancel" name="new_member_cancel" class="btn btn-default">Cancel</button>
+                                <a href=" <?php echo $this->url(array('controller' => 'admin_members', 'action' => 'index'), 'default', 'true'); ?> " id="new_member_cancel" name="new_member_cancel" class="btn btn-default" >Cancel</a>
                                 <button type="submit" id="new_member_submit" name="new_member_submit" class="btn btn-success">Save</button>
                             </div>
                         </div>
