@@ -1,3 +1,7 @@
+<?php
+    $user = Zend_Auth::getInstance()->getIdentity();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -55,6 +59,10 @@
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="">Singed in as <strong> <?php echo $this->escape($user['username']); ?> </strong></a>
+                            </li>
+                            <li class="divider"></li>
                             <li>
                                 <a href=" <?php echo $this->url(array('controller' => 'admin_profile', 'action' => 'edit'), 'default', 'true'); ?> "><i class="fa fa-user fa-fw"></i> Edit Profile</a>
                             </li>

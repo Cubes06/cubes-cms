@@ -56,7 +56,7 @@
                     
                     $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
                     
-                    $cmsMembersTable->insert($formData);
+                    $cmsMembersTable->insertMember($formData);
                     
 
                     // do actual task
@@ -129,7 +129,7 @@
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     
                     //radimo update postojeceg zapisa u tabeli
-                    $cmsMembersTable->update($formData, 'id = ' . $member['id']);
+                    $cmsMembersTable->updateMember('id = ' . $member['id'], $formData);
                     
 
                     // do actual task

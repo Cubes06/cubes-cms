@@ -1,0 +1,206 @@
+<div class = "page-header">
+    <h1>JavaScript 1</h1>
+</div>
+<div class = "row">
+    <div class = "col-lg-12">
+        <button class = "btn btn-default">Ulepsaj tabelu</button>
+        <button class = "btn btn-default">Dodaj red</button>
+        <a href = "http://www.facebook.com" class = "btn btn-default">Otvori facebook</a>
+    </div>
+</div>
+<div class = "row">
+    <div class = "col-lg-12">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>php01</td>
+                    <td>Aleksandar</td>
+                    <td>Stevanovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php02</td>
+                    <td>Natasa</td>
+                    <td>Lukic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php03</td>
+                    <td>Aleksandra</td>
+                    <td>Petkovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php04</td>
+                    <td>Djordje</td>
+                    <td>Stojiljkovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php05</td>
+                    <td>Milos</td>
+                    <td>Stefanovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php06</td>
+                    <td>Milomir</td>
+                    <td>Dragovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php07</td>
+                    <td>Miroslav</td>
+                    <td>Mutic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php08</td>
+                    <td>Bojan</td>
+                    <td>Joncic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php09</td>
+                    <td>Arben</td>
+                    <td>Bakiu</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php10</td>
+                    <td>Zeljka</td>
+                    <td>Babic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    // ne postoje asocijativni nizovi
+    // nije OOP
+    // Prototype based language
+    
+    var ime = "Ime1";
+    var starost = 30;
+    var polaznici = ["Aleksandar Stevanovic", "Natasa Lukic", "Aleksandra Petkovic"];
+    
+    for (var index in polaznici) {
+        alert(index + ': ' + polaznici[index]);
+        //console.log -> za ispis u konzoli (inspect element)
+    };
+    
+    console.log(polaznici);
+    
+    //alert(ime);
+    
+    var polaznik = {
+        'ime': 'Ime1',
+        'prezime': 'Prezime1',
+        starost: 30,
+        ime2: 'Ime2',
+        prezime2: 'Prezime2'
+    };
+    
+//    for (var key in polaznik) {
+//        console.log(key + ' -> ' . polaznik[key]);
+//    }
+    
+    //alert(polaznik.prezime);
+    
+    //alert(polaznici[2]);
+    
+    //JSON - JavaScript Object Notation
+    // primer u JSON formatu:
+    var cubes = {
+        name: 'Cubes d.o.o.',
+        address: 'Bulevar Mihaila Pupina 181',
+        courses: [
+            {
+                name: 'PHP',
+                students: {
+                    php01: 'Aleksandar Stevanovic',
+                    php02: 'Natasa Lukic',
+                    php03: 'Aleksandra Petkovic'
+                }
+            },
+            {
+                name: 'iOS',
+                students: {
+                    ios01: 'IOS 1',
+                    ios02: 'IOS 2',
+                    ios03: 'IOS 3',
+                }
+            }
+        ]
+    };
+    
+    
+    //alert(cubes.courses[0].students.php03);
+    //alert(cubes['courses'][0]['students']['php02']);
+    //console.log(cubes):
+    
+
+
+
+</script>
