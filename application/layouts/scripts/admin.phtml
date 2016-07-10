@@ -49,6 +49,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href=" <?php echo $this->url(array('controller' => 'admin_dashboard'), 'default', 'true'); ?> ">Cubes School Admin</a>
+                    
                 </div>
                 <!-- /.navbar-header -->
 
@@ -70,7 +71,8 @@
                                 <a href=" <?php echo $this->url(array('controller' => 'admin_profile', 'action' => 'changepassword'), 'default', 'true'); ?> "><i class="fa fa-key fa-fw"></i> Change Password</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href=" <?php echo $this->url(array('controller' => 'admin_session', 'action' => 'logout'), 'default', 'true'); ?> "><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li>
+                                <a href=" <?php echo $this->url(array('controller' => 'admin_session', 'action' => 'logout'), 'default', 'true'); ?> "><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -83,10 +85,17 @@
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
                             <li>
+                                <a href=" <?php echo $this->url(array('controller' => 'index'), 'default', 'true'); ?> "><i class="fa fa-hand-o-left"></i> Back to front-end</a>
+                            </li>
+                            
+                            <li>
                                 <a href=" <?php echo $this->url(array('controller' => 'admin_dashboard'), 'default', 'true'); ?> "><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
                             <li>
                                 <a href=" <?php echo $this->url(array('controller' => 'admin_members'), 'default', 'true'); ?> "><i class="fa fa-table fa-fw"></i> Members</a>
+                            </li>
+                            <li>
+                                <a href=" <?php echo $this->url(array('controller' => 'admin_services'), 'default', 'true'); ?> "><i class="fa fa-briefcase"></i> Services</a>
                             </li>
                         </ul>
                     </div>

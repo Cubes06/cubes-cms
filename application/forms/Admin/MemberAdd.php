@@ -1,7 +1,6 @@
 <?php
 
-class Application_Form_Admin_MemberAdd extends Zend_Form
-{
+class Application_Form_Admin_MemberAdd extends Zend_Form {
     
     // Overajdovan init metoda
     public function init() {

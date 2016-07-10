@@ -2,48 +2,47 @@
     $this->headTitle('Services');
 ?>
 
+<div id="highlighted">
+    <div class="container">
+        <div class="header">
+            <h2 class="page-title">
+                <span>Services</span> 
+                <small>The services we offer &amp; how we can help you!</small>
+            </h2>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <div class="container">
+        
+        <!-- Services -->        
+        <div class="block services">
+            <ul class="thumbnails row">
 
-		<div id="highlighted">
-			<div class="container">
-				<div class="header">
-					<h2 class="page-title">
-						<span>Services</span> 
-						<small>The services we offer &amp; how we can help you!</small>
-					</h2>
-				</div>
-			</div>
-		</div>
-		<div id="content">
-			<div class="container">
-				<!-- Services -->
-				<div class="block services">
-					<ul class="thumbnails row">
-						<li class="col-md-3">
-							<h3 class="title">
-								<i class="glyphicon glyphicon-wrench icon-small icon-inverse-80 _icon-circle"></i> Web
-							</h3>
-							<p>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio! Elementum tortor sociis in eu dis dictumst pulvinar lorem nec aliquam a nascetur.</p>
-						</li>
-						<li class="col-md-3">
-							<h3 class="title">
-								<i class="glyphicon glyphicon-search icon-small icon-inverse-80 _icon-circle"></i> SEO
-							</h3>
-							<p>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio! Elementum tortor sociis in eu dis dictumst pulvinar lorem nec aliquam a nascetur.</p>
-						</li>
-						<li class="col-md-3">
-							<h3 class="title">
-								<i class="glyphicon glyphicon-pencil icon-small icon-inverse-80 _icon-circle"></i> Design
-							</h3>
-							<p>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio! Elementum tortor sociis in eu dis dictumst pulvinar lorem nec aliquam a nascetur.</p>
-						</li>
-						<li class="col-md-3">
-							<h3 class="title">
-								<i class="glyphicon glyphicon-shopping-cart icon-small icon-inverse-80 _icon-circle"></i> eCommerce
-							</h3>
-							<p>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio! Elementum tortor sociis in eu dis dictumst pulvinar lorem nec aliquam a nascetur.</p>
-						</li>
-					</ul>
-					
-				</div>
-			</div>
-		</div>
+                <?php
+                    $i = 0;
+                    foreach ($this->services as $service) {
+                        if($i % 4 === 0) { // kraj reda i prelazak u novi ?>  
+                                </ul>
+                            </div>
+        
+                            <div class="block services">
+                                <ul class="thumbnails row">
+                        <?php }
+                        $i++;
+//                        $memberUrl = $this->baseUrl('/aboutus/member/id/' . $member['id']);
+//                        $memberImgUrl = $this->memberImgUrl($member);
+                        ?>
+                        <li class="col-md-3">
+                            <h3 class="title">
+                                <i class=" <?php echo $this->escape($service['icon']); ?> "></i> <?php echo $this->escape($service['title']); ?>
+                            </h3>
+                            <p> <?php echo $this->escape($service['description']); ?> </p>
+                        </li>              
+                <?php } ?>
+                
+            </ul>
+        </div>
+        
+    </div>
+</div>
