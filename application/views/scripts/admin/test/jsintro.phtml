@@ -1,142 +1,12 @@
 <div class = "page-header">
     <h1>JavaScript 1</h1>
 </div>
-<div class = "row">
-    <div class = "col-lg-12">
-        <button class = "btn btn-default">Ulepsaj tabelu</button>
-        <button class = "btn btn-default">Dodaj red</button>
-        <a href = "http://www.facebook.com" class = "btn btn-default">Otvori facebook</a>
-    </div>
-</div>
-<div class = "row">
-    <div class = "col-lg-12">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Ime</th>
-                    <th>Prezime</th>
-                    <th>#</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>php01</td>
-                    <td>Aleksandar</td>
-                    <td>Stevanovic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php02</td>
-                    <td>Natasa</td>
-                    <td>Lukic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php03</td>
-                    <td>Aleksandra</td>
-                    <td>Petkovic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php04</td>
-                    <td>Djordje</td>
-                    <td>Stojiljkovic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php05</td>
-                    <td>Milos</td>
-                    <td>Stefanovic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php06</td>
-                    <td>Milomir</td>
-                    <td>Dragovic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php07</td>
-                    <td>Miroslav</td>
-                    <td>Mutic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php08</td>
-                    <td>Bojan</td>
-                    <td>Joncic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php09</td>
-                    <td>Arben</td>
-                    <td>Bakiu</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>php10</td>
-                    <td>Zeljka</td>
-                    <td>Babic</td>
-                    <td>
-                        <div class = "btn-group">
-                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
 
 <script>
+    <?php
+        $this->inlineScript()->captureStart();
+    ?>
     // ne postoje asocijativni nizovi
     // nije OOP
     // Prototype based language
@@ -146,11 +16,13 @@
     var polaznici = ["Aleksandar Stevanovic", "Natasa Lukic", "Aleksandra Petkovic"];
     
     for (var index in polaznici) {
-        alert(index + ': ' + polaznici[index]);
+        //alert(index + ': ' + polaznici[index]);
         //console.log -> za ispis u konzoli (inspect element)
     };
     
-    console.log(polaznici);
+    console.log(polaznici);  // u browseru vec postoje objekti, jedan od njih je i console // window objekat je 'master' objekat browser-a
+    //isto je kao window.console.log()
+    // window.console
     
     //alert(ime);
     
@@ -169,6 +41,7 @@
     //alert(polaznik.prezime);
     
     //alert(polaznici[2]);
+    
     
     //JSON - JavaScript Object Notation
     // primer u JSON formatu:
@@ -194,13 +67,97 @@
             }
         ]
     };
+    // kada je fajl json (.json) onda je njegov tip "application/json" 
     
     
     //alert(cubes.courses[0].students.php03);
     //alert(cubes['courses'][0]['students']['php02']);
     //console.log(cubes):
     
-
-
-
+    
+    
+    //kad imamo promenjivu koja se samo pojavi ona je property od objekta window
+    //      znacajni:
+    //      Document
+    //      Screen
+    //      Location
+    
+    var doubleTestNumber;
+    function testF(testNumber) {
+        doubleTestNumber = testNumber * 2;
+        //console.log('Calling function testF ' . doubleTestNumber + '!');
+    };
+    
+    testF(1);  //ovako se poziva funkcija
+    testF(2);
+    testF(3);
+    testF(4);
+    testF(5);
+    //console.log('Double test number is: ' + doubleTestNumber);
+    
+    
+    
+    
+    
+    var testF2 = function() {
+        console.log('Calling testF2');
+    };
+    
+    testF2();
+    
+    //Object constructor
+    function Polaznik(ime, prezime, starost) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.starost = starost;
+        
+        this.predstaviSe = function() {
+            return 'Ja sam ' + this.ime + ' ' + this.prezime + ' ' + this.starost + ' god.';
+        };
+    };
+    
+    // U JS sve je javno
+    
+    var p1 = new Polaznik('ime1', 'prezime1', 11);
+    var p2 = new Polaznik('ime2', 'prezime2', 22);
+    var p3 = new Polaznik('ime3', 'prezime3', 33);
+    var p4 = new Polaznik('ime4', 'prezime4', 44);
+    
+    //mozemo naknadno da dodajemo property-e
+    p4.getIme = function() {
+        return this.ime;
+    };
+    
+    console.log(p1.predstaviSe());
+    console.log(p2.predstaviSe());
+    console.log(p3.predstaviSe());
+    console.log(p4.predstaviSe());
+    
+    //master objekat
+    window;
+    
+    //working with computer screen
+    window.screen;
+    screen;
+    
+    //working with browser window location (address bar)
+    window.location;
+    location;
+    
+    //makes browser idle for 5000 miliseconds
+//    setTimeout(function() {
+//        location.href = "http://www.google.com"; //redirect from JavaScript
+//        
+//    }, 5000);
+    
+    
+    //DOM - Document Object Model
+    window.document;
+    document;
+    
+    
+    
+    <?php
+        $this->inlineScript()->captureEnd();
+    ?>
 </script>

@@ -10,4 +10,8 @@
             
         }
         
+        public function jqueryAction() {
+            
+        }
+        
     }

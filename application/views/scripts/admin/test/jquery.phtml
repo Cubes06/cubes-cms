@@ -1,0 +1,201 @@
+<div class = "page-header">
+    <h1>JavaScript jQuery</h1>
+</div>
+<div class = "row">
+    <div class = "col-lg-12">
+        <button id="ulepsaj-tabelu-btn" class = "btn btn-default">Ulepsaj tabelu</button>
+        <button data-action="add-row" class = "btn btn-default">Dodaj red</button>
+        <a data-action="go-to-facebook" href = "http://www.facebook.com" class = "btn btn-default">Otvori facebook</a>
+    </div>
+</div>
+<div class = "row">
+    <div class = "col-lg-12">
+        <table id="test-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>php01</td>
+                    <td>Aleksandar</td>
+                    <td>Stevanovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php02</td>
+                    <td>Natasa</td>
+                    <td>Lukic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php03</td>
+                    <td>Aleksandra</td>
+                    <td>Petkovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php04</td>
+                    <td>Djordje</td>
+                    <td>Stojiljkovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php05</td>
+                    <td>Milos</td>
+                    <td>Stefanovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php06</td>
+                    <td>Milomir</td>
+                    <td>Dragovic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php07</td>
+                    <td>Miroslav</td>
+                    <td>Mutic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php08</td>
+                    <td>Bojan</td>
+                    <td>Joncic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php09</td>
+                    <td>Arben</td>
+                    <td>Bakiu</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>php10</td>
+                    <td>Zeljka</td>
+                    <td>Babic</td>
+                    <td>
+                        <div class = "btn-group">
+                            <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
+                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class = "row">
+    <div class = "col-lg-12">
+        <button id="ulepsaj-tabelu-btn2" class = "btn btn-default">Ulepsaj tabelu</button>
+        <button data-action="add-row" class = "btn btn-default">Dodaj red</button>
+        <a data-action="go-to-facebook" href = "http://www.facebook.com" class = "btn btn-default">Otvori facebook</a>
+    </div>
+</div>
+
+<script>
+    
+    <?php $this->inlineScript()->captureStart(); ?>
+    
+    // funkcija $()  je isto sto i funkcija jQuery()
+    // $(CSS selektor za element)
+//    $('table').addClass('table')
+//            .addClass("table-striped")
+//            .addClass('table-hover');
+    //$('#test-table').addClass('table');
+    //$('#test-table tr').addClass('danger');
+        
+    //$('#test-table').find('tbody tr').addClass('danger'); //sa find je brze jer ne pretrazuje ceo DOM (rezultat isti)
+        
+//    var testTable = $('#test-table');
+//    testTable.addClass('test');
+//    testTable.find('tbody tr').addClass('success');
+    //za kretanje po DOM-u:
+    //https://api.jquery.com/category/traversing/
+        
+        
+    //brisanje prvog elementa
+//    var firstRow = testTable.find('tbody tr:first-child').first();
+//    var firstRowClone = firstRow.clone();
+//    testTable.find('tbody').append(firstRowClone);
+    
+    
+    //EVENT
+    //triggered by action
+    //processed by event handler
+    //  default event handling
+    //  custom event handling
+    
+    
+    $('#ulepsaj-tabelu-btn').on('click', function(e) {
+        $('#test-table').addClass('table table-striped table-hover');
+        //$('#test-table').find('tbody tr').addClass('success');
+    });
+    
+    
+    $('[data-action="add-row"]').on('click', function(e) {
+        var lastRowClone = $('#test-table tbody tr:last').clone();
+        lastRowClone.addClass('success');
+        $('#test-table tbody').append(lastRowClone);
+    });
+        
+    $('[data-action="go-to-facebook"]').on('click', function(e) {
+       e.preventDefault(); //prevents default event handler on element
+       // ex. prevents a element to load another page on click
+       
+       var url = $(this).attr('href');
+       alert('Browser is prevented to go to ' + url);
+    });
+        
+    <?php $this->inlineScript()->captureEnd(); ?>
+    
+</script>
