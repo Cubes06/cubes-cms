@@ -41,7 +41,7 @@
 
         public function insertService($service) {
             //fetch order number for new member
-            $id->insert($service);         
+            $id = $this->insert($member);                     
             return $id;
         }
     }

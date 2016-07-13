@@ -161,5 +161,172 @@
         
         
         
+        public function deleteAction() {
+            
+            $request = $this->getRequest();
+            
+            if (!$request->isPost() || $request->getPost('task') != 'delete') {
+                // request is not post or task is not delete
+                // redirect to index page
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+            $flashMessenger = $this->getHelper('FlashMessenger'); 
+            
+            try {
+                $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
+
+                if ($id <= 0) {
+                    throw new Application_Model_Exception_InvalidInput('Invalid member id: ' . $id);
+                }
+
+                $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
+                $member = $cmsMembersTable->getMemberById($id);
+
+                if (empty($member)) {
+                    throw new Application_Model_Exception_InvalidInput('No member is found with id: ' . $id, 'errors');
+                }
+
+                $cmsMembersTable->deleteMember($id);
+                $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . ' has been deleted.', 'success');
+                    $redirector = $this->getHelper('Redirector');
+                    $redirector->setExit(true)
+                            ->gotoRoute(array(
+                                'controller' => 'admin_members',
+                                'action' => 'index'
+                                ), 'default', true);
+            } 
+            catch (Application_Model_Exception_InvalidInput $ex) {
+                $flashMessenger->addMessage($ex->getMessage(), 'errors');
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+            
+ 
+            
+        }
+        
+        
+        
+        public function disableAction() {
+            
+            $request = $this->getRequest();
+            
+            if (!$request->isPost() || $request->getPost('task') != 'disable') {
+                // request is not post or task is not disable
+                // redirect to index page
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+            $flashMessenger = $this->getHelper('FlashMessenger'); 
+            
+            try {
+                $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
+
+                if ($id <= 0) {
+                    throw new Application_Model_Exception_InvalidInput('Invalid member id: ' . $id);
+                }
+
+                $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
+                $member = $cmsMembersTable->getMemberById($id);
+
+                if (empty($member)) {
+                    throw new Application_Model_Exception_InvalidInput('No member is found with id: ' . $id, 'errors');
+                }
+
+                $cmsMembersTable->disableMember($id);
+                $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . ' has been disabled.', 'success');
+                    $redirector = $this->getHelper('Redirector');
+                    $redirector->setExit(true)
+                            ->gotoRoute(array(
+                                'controller' => 'admin_members',
+                                'action' => 'index'
+                                ), 'default', true);
+            } 
+            catch (Application_Model_Exception_InvalidInput $ex) {
+                $flashMessenger->addMessage($ex->getMessage(), 'errors');
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+
+            
+        }
+        
+        
+        
+        public function enableAction() {
+            
+            $request = $this->getRequest();
+            
+            if (!$request->isPost() || $request->getPost('task') != 'enable') {
+                // request is not post or task is not disable
+                // redirect to index page
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+            $flashMessenger = $this->getHelper('FlashMessenger'); 
+            
+            try {
+                $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
+
+                if ($id <= 0) {
+                    throw new Application_Model_Exception_InvalidInput('Invalid member id: ' . $id);
+                }
+
+                $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
+                $member = $cmsMembersTable->getMemberById($id);
+
+                if (empty($member)) {
+                    throw new Application_Model_Exception_InvalidInput('No member is found with id: ' . $id, 'errors');
+                }
+
+                $cmsMembersTable->enableMember($id);
+                $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . ' has been enabled.', 'success');
+                    $redirector = $this->getHelper('Redirector');
+                    $redirector->setExit(true)
+                            ->gotoRoute(array(
+                                'controller' => 'admin_members',
+                                'action' => 'index'
+                                ), 'default', true);
+            } 
+            catch (Application_Model_Exception_InvalidInput $ex) {
+                $flashMessenger->addMessage($ex->getMessage(), 'errors');
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_members',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            
+
+            
+        }
+        
     }
 

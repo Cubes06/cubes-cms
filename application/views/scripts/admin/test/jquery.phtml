@@ -27,7 +27,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -49,7 +49,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -71,7 +71,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -82,7 +82,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -93,7 +93,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -104,7 +104,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -115,7 +115,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -126,7 +126,7 @@
                     <td>
                         <div class = "btn-group">
                             <button class = "btn btn-sm"><i class = "fa fa-eye"></i></button>
-                            <button class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
+                            <button data-action="delete-row" class = "btn btn-sm"><i class = "fa fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -141,6 +141,11 @@
         <a data-action="go-to-facebook" href = "http://www.facebook.com" class = "btn btn-default">Otvori facebook</a>
     </div>
 </div>
+
+
+
+
+
 
 <script>
     
@@ -191,10 +196,30 @@
     $('[data-action="go-to-facebook"]').on('click', function(e) {
        e.preventDefault(); //prevents default event handler on element
        // ex. prevents a element to load another page on click
-       
        var url = $(this).attr('href');
        alert('Browser is prevented to go to ' + url);
     });
+    
+    //Sreda 13.07.2016.
+    
+//    $('[data-action = "delete-row"]').on('click', function(e) {
+//        e.preventDefault();
+//        //target is element that was clicked
+//        var target = $(this);
+//        //butoon -> div -> td -> tr       
+//        target.closest('tr').remove(); //target.parent().parent().parent();
+//    });
+
+    $('#test-table').on('click', '[data-action = "delete-row"]', function(e) {
+        e.stopPropagation();      
+        e.preventDefault();
+        //target is element that was clicked586
+        var target = $(this);
+        //butoon -> div -> td -> tr       
+        target.closest('tr').remove(); //target.parent().parent().parent();
+    });
+    
+    
         
     <?php $this->inlineScript()->captureEnd(); ?>
     

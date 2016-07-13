@@ -44,10 +44,45 @@
          */
         public function insertMember($member) {
             //fetch order number for new member
-            $id->insert($member);
             
-            
+            $id = $this->insert($member);
+                        
             return $id;
         }
+        
+        /**
+         * 
+         * @param int $id ID of member to delete
+         */
+        public function deleteMember($id) {
+            $this->delete('id = ' . $id);
+        }
+        
+        /**
+         * 
+         * @param int $id    ID of member to disable
+         */
+        public function disableMember($id) {
+            $this->update(array(
+                'status' => self::STATUS_DISABLED
+            ), 'id = ' . $id);
+        }
+        
+        /**
+         * 
+         * @param int $id    ID of member to enable
+         */
+        public function enableMember($id) {
+            $this->update(array(
+                'status' => self::STATUS_ENABLED
+            ), 'id = ' . $id);
+        }
+        
+        
+        
+        
+        
+        
+        
         
     }
