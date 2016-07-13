@@ -30,7 +30,7 @@
          * @param int $id
          * @param array $service   Associative array with keys as column names and values as column new values
          */
-        public function updateService($id, $service) {
+        public function updateService($service, $id) {
             if (isset($service['id'])) {
                 //Forbid changing of user id
                 unset($service['id']);
@@ -38,10 +38,11 @@
             $this->update($service, 'id = ' . $id);
         }
         
+        
 
         public function insertService($service) {
             //fetch order number for new member
-            $id = $this->insert($member);                     
+            $id = $this->insert($service);                     
             return $id;
         }
     }

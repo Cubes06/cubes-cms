@@ -27,13 +27,21 @@
 
         }
         
+        
+                    
+//                $data = array(
+//                    'updated_on'      => '2007-03-23',
+//                    'bug_status'      => 'FIXED'
+//                );
+//
+//                $n = $db->update('bugs', $data, 'bug_id = 2');
+        
         public function updateMember ($id, $member) {
 
             if (isset($member['id'])) {
                 //Forbid changing of user id
                 unset($member['id']);
             }
-
             $this->update($member, 'id = ' . $id);
         }
 

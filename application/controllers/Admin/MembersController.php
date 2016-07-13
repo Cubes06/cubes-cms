@@ -129,7 +129,7 @@
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     
                     //radimo update postojeceg zapisa u tabeli
-                    $cmsMembersTable->updateMember('id = ' . $member['id'], $formData);
+                    $cmsMembersTable->updateMember($member['id'], $formData);
                     
 
                     // do actual task

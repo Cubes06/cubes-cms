@@ -49,7 +49,7 @@
                     //get form data
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     $cmsServicesTable = new Application_Model_DbTable_CmsServices();
-                    $cmsServicesTable->insert($formData);
+                    $cmsServicesTable->insertService($formData);
                     
                     //set system message
                     $flashMessenger->addMessage('Service has been saved.', 'success');
@@ -117,7 +117,7 @@
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     
                     //radimo update postojeceg zapisa u tabeli
-                    $cmsServicesTable->update($formData, 'id = ' . $service['id']);
+                    $cmsServicesTable->updateService($formData, $service['id']);
                     //$cmsServicesTable->updateService('id = ' . $service['id'], $formData);
 
                     //set system message
