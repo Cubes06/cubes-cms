@@ -44,6 +44,17 @@
             }
             $this->update($member, 'id = ' . $id);
         }
+        
+        public function updateOrderOfMembers($sortedIds) {
+            
+            foreach ($sortedIds as $orderNumber => $id) {
+                $this->update(array(
+                        'order_number' => $orderNumber + 1 
+                    ), 'id = ' . $id);
+            }
+        }
+        
+        
 
         /**
          * 
