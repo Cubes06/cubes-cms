@@ -42,8 +42,56 @@
 
         public function insertService($service) {
             //fetch order number for new member
-            $id = $this->insert($service);                     
-            return $id;
+            $select = $this->select();
+            
+            $select->from($this, array(new Zend_Db_Expr('(MAX(order_number))+1 AS order_number')));
+            
+            $row = $this->fetchRow($select);
+            
+            $service['order_number'] = $row['order_number']
+
+            $this->insert($service); 
         }
+        
+        
+        public function updateOrderOfServices($sortedIds) {
+            
+            foreach ($sortedIds as $orderNumber => $id) {
+                $this->update(array(
+                        'order_number' => $orderNumber + 1 
+                    ),  'id = ' . $id);
+            }
+        }
+        
+        
+        /**
+         * 
+         * @param int $id ID of service to delete
+         */
+        public function deleteService($id) {
+            $this->delete('id = ' . $id);
+        }
+        
+        /**
+         * 
+         * @param int $id    ID of service to disable
+         */
+        public function disableService($id) {
+            $this->update(array(
+                'status' => self::STATUS_DISABLED
+            ), 'id = ' . $id);
+        }
+        
+        /**
+         * 
+         * @param int $id    ID of service to enable
+         */
+        public function enableService($id) {
+            $this->update(array(
+                'status' => self::STATUS_ENABLED
+            ), 'id = ' . $id);
+        }
+        
+        
     }
 

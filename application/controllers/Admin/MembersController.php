@@ -160,8 +160,7 @@
             
 	}
         
-        
-        
+     
         public function deleteAction() {
             
             $request = $this->getRequest();
@@ -213,7 +212,6 @@
             }
             
         }
-        
         
         
         public function disableAction() {
@@ -270,8 +268,7 @@
             
         }
         
-        
-        
+              
         public function enableAction() {
             
             $request = $this->getRequest();
@@ -382,20 +379,13 @@
                             'action' => 'index'
                             ), 'default', true);
             }
-            
-            
-            
-            
-            
-            
-            
+               
             $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
                             'controller' => 'admin_members',
                             'action' => 'index'
-                            ), 'default', true);
-            
+                            ), 'default', true);          
         }
         
     }
