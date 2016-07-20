@@ -26,6 +26,7 @@
             $this->view->systemMessages = $systemMessages;
         }
         
+        
         public function addAction() {
             $request = $this->getRequest(); //podaci iz url-a iz forme sa koje dolazimo 
             $flashMessenger = $this->getHelper('FlashMessenger');  // za prenosenje sistemskih poruka
@@ -53,6 +54,8 @@
 
                     //get form data
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
+                    
+                    //unset $formData['member_photo'];
                     
                     $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
                     

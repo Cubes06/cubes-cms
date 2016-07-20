@@ -4,6 +4,7 @@
 
         const STATUS_ENABLED = 1; // ovo su sad nove konstante (odnose sa na ovu klasu)
         const STATUS_DISABLED = 0;
+        const DEFAULT_PASSWORD = 'cubesphp';
 
         protected $_name = 'cms_users';  //ovde ide naziv tabele
 
@@ -51,7 +52,22 @@
             $this->update(array('password' => md5($newPassword)), 'id = ' . $id);
         }
         
-
+        
+        /**
+         * 
+         * @param array $user
+         * @return int ID of new user
+         */
+        public function insertUser($user) {
+            //set default password for new user
+            $user['password'] = md5(self::DEFAULT_PASSWORD);
+            
+            
+            
+            $id = $this->insert($user);
+                        
+            return $id;
+        }
 
 
     }

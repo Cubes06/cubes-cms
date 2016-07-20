@@ -69,7 +69,7 @@ foreach ($this->users as $user) {
                                             <a 
                                                 href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
                                                 type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <button type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                                            <button type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
                                             <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
 
                                         </div>
