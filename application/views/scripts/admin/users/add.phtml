@@ -1,0 +1,153 @@
+<?php
+
+$this->headTitle('Users - Add User');
+
+$form = $this->form;
+$form->setElementDecorators(array('ViewHelper'));
+?>
+<div class="page-header">
+	<h1>Users <small>Add User</small></h1>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo $this->systemMessagesHtml($this->systemMessages);?>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading text-right">
+				<div class="btn-group" role="group" aria-label="...">
+					<a 
+						href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'index'), 'default', true);?>"
+						class="btn btn-default"
+						><i class="glyphicon glyphicon-arrow-left"></i> Back to all users</a>
+				</div>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+					<input type="hidden" name="task" value="update">
+					
+					<fieldset>
+
+						<!-- Form Name -->
+						<legend>Add User</legend>
+						
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="username">Username</label>  
+							<div class="col-md-4">
+								<?php 
+								echo $form->getElement('username')->setAttribs(array(
+									'class' => 'form-control input-md',
+									'placeholder' => 'enter user\'s username',
+									'id' => 'username',
+									'required' => 'required'
+								));
+								?>
+								<span class="help-block">min 3 max 255 characters</span>  
+							</div>
+							<div class="col-md-4">
+								<?php if ($form->getElement('username')->hasErrors()) {?>
+								<div class="has-error">
+									<?php foreach ($form->getElement('username')->getMessages() as $message) {?>
+									<p class="help-block"><?php echo $this->escape($message);?></p>
+									<?php }?>
+								</div>
+								<?php }?>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="first_name">First Name</label>  
+							<div class="col-md-4">
+								<?php 
+								echo $form->getElement('first_name')->setAttribs(array(
+									'class' => 'form-control input-md',
+									'placeholder' => 'enter user\'s first name',
+									'id' => 'first_name',
+									'required' => 'required'
+								));
+								?>
+								<span class="help-block">min 3 max 255 characters</span>  
+							</div>
+							<div class="col-md-4">
+								<?php if ($form->getElement('first_name')->hasErrors()) {?>
+								<div class="has-error">
+									<?php foreach ($form->getElement('first_name')->getMessages() as $message) {?>
+									<p class="help-block"><?php echo $this->escape($message);?></p>
+									<?php }?>
+								</div>
+								<?php }?>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="last_name">Last Name</label>  
+							<div class="col-md-4">
+								<?php 
+								echo $form->getElement('last_name')->setAttribs(array(
+									'class' => 'form-control input-md',
+									'placeholder' => 'enter user\'s last name',
+									'id' => 'last_name',
+									'required' => 'required',
+								));
+								?>
+								<span class="help-block">min 3 max 255 characters</span>  
+							</div>
+							
+							<div class="col-md-4">
+								<?php if ($form->getElement('last_name')->hasErrors()) {?>
+								<div class="has-error">
+									<?php foreach ($form->getElement('last_name')->getMessages() as $message) {?>
+									<p class="help-block"><?php echo $this->escape($message);?></p>
+									<?php }?>
+								</div>
+								<?php }?>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="email">Email</label>  
+							<div class="col-md-4">
+								<?php 
+								echo $form->getElement('email')->setAttribs(array(
+									'class' => 'form-control input-md',
+									'placeholder' => 'enter user\'s email',
+									'id' => 'email',
+									'required' => 'required'
+								));
+								?>
+								<span class="help-block">username@domain</span>  
+							</div>
+							
+							<div class="col-md-4">
+								<?php if ($form->getElement('email')->hasErrors()) {?>
+								<div class="has-error">
+									<?php foreach ($form->getElement('email')->getMessages() as $message) {?>
+									<p class="help-block"><?php echo $this->escape($message);?></p>
+									<?php }?>
+								</div>
+								<?php }?>
+							</div>
+						</div>
+
+						<!-- Button (Double) -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="new_user_cancel"></label>
+							<div class="col-md-8 text-right">
+								<a href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'index'), 'default', true);?>" id="new_user_cancel" name="new_user_cancel" class="btn btn-default">Cancel</a>
+								<button type="submit" id="new_user_submit" name="new_user_submit" class="btn btn-success">Save</button>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
