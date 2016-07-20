@@ -48,7 +48,7 @@
             
             $row = $this->fetchRow($select);
             
-            $service['order_number'] = $row['order_number']
+            $service['order_number'] = $row['order_number'];
 
             $this->insert($service); 
         }
