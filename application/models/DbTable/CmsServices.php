@@ -6,7 +6,7 @@
         const STATUS_DISABLED = 0;
 
         protected $_name = 'cms_services';
-
+ 
         /**
          * 
          * @param int $id

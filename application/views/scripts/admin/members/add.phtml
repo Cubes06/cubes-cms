@@ -163,6 +163,26 @@
                                 <?php } ?>
                             </div>
                         </div>
+                        
+                         <!-- Image -->
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="member_photo">Photo member</label>
+                            <div class="col-md-4"> 
+                                
+                                <input type="file" name="member_photo" id="member_photo" class="form-control  input-md">
+                                
+                            </div>
+                            <div class="col-md-4">
+                                 <?php if ($form->getElement('member_photo')->hasErrors()) { ?>
+                                    <div class="has-error">
+                                        <?php foreach ($form->getElement('member_photo')->getMessages() as $message) { ?>
+                                            <p class="help-block"><?php echo $this->escape($message); ?></p>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
 
                         <!-- Button (Double) -->
                         <div class="form-group">
@@ -182,4 +202,3 @@
     
     
 </div>
-

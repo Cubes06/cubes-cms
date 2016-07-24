@@ -34,11 +34,11 @@ $this->headTitle('Users');
                         </tr>
                     </thead>
                     <tbody>
-<?php
-foreach ($this->users as $user) {
-    if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_DISABLED) {
-                            ?>
-                                <tr data-user-id="<?php echo $this->escape($user['id']); ?>" class="danger">
+                        <?php
+                        foreach ($this->users as $user) {
+                            if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_DISABLED) {
+                                ?>
+                                <tr class="danger" data-user-id="<?php echo $this->escape($user['id']); ?>">
                                     <td class="text-center"><span class="badge alert-danger" title="disabled"><i class="glyphicon glyphicon-remove"></i></span></td>
                                     <td><?php echo $this->escape($user['username']); ?></td>
                                     <td><?php echo $this->escape($user['first_name']); ?></td>
@@ -49,9 +49,9 @@ foreach ($this->users as $user) {
                                             <a 
                                                 href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
                                                 type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <button type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
-                                            <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
-
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="enable" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="resetpassword" class="btn btn-default" title="reset password"><i class="fa fa-unlock-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -69,9 +69,9 @@ foreach ($this->users as $user) {
                                             <a 
                                                 href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
                                                 type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <button type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
-                                            <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
-
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="disable" class="btn btn-default" title="disabled"><i class="glyphicon glyphicon-remove"></i></button>
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="resetpassword" class="btn btn-default" title="reset password"><i class="fa fa-unlock-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -92,3 +92,189 @@ foreach ($this->users as $user) {
         </div>
     </div>
 </div>
+
+
+
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_users', 'action' => 'delete'), 'default', true) ?> " id="delete-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='delete'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete user</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_users', 'action' => 'enable'), 'default', true) ?> " id="enable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='enable'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Enable user</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to enable user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check"></i>Enable</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_users', 'action' => 'disable'), 'default', true) ?> " id="disable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='disable'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Disable user</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to disable user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Disable</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+<form method="post" action="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'resetpassword'), 'default', true); ?>" id="resetpassword-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type="hidden" name="task" value="resetPassword">
+    <input type="hidden" name="id" value="">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Reset user's password</h4>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to reset user's password?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"> </i> Reset password</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_users', 'action' => 'updateorder'), 'default', true) ?> " style="display: none;" id="save-order-form">
+    <input type="hidden" name="task" value="saveOrder">
+    <input type="hidden" name="sorted_ids" value="">
+</form>
+
+
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/admin/bower_components/datatables-responsive/css/dataTables.responsive.css'));
+    $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/datatables/media/js/jquery.dataTables.min.js'));
+    $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'));
+    $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/datatables-responsive/js/dataTables.responsive.js'));
+?>
+
+<script> 
+    <?php $this->inlineScript()->captureStart(); ?>
+
+               
+    $('#rows-table').on('click', '[data-action="delete"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="delete"]') ? $(this) : $(this).closest('[data-action="delete"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var userId = target.attr('data-user-id'); 
+        //var userId = target.data('user-id');
+        //alert(userId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#delete-warning-dialog').find('[name="id"]').val(userId);
+        $('#delete-warning-dialog').modal('show');
+    });
+    
+    
+    $('#rows-table').on('click', '[data-action="disable"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="disable"]') ? $(this) : $(this).closest('[data-action="disable"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var userId = target.attr('data-user-id'); //ovako hvatamo bilo koji atribut (href, id, src...)
+        //var userId = target.data('user-id'); //ovako hvatamo svaki data atribut ( i izostavljamo rec data ispred) i moraju da budu sve mala slova
+        
+        //alert(userId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#disable-warning-dialog').find('[name="id"]').val(userId);
+        $('#disable-warning-dialog').modal('show');
+    });
+    
+    
+    $('#rows-table').on('click', '[data-action="enable"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="enable"]') ? $(this) : $(this).closest('[data-action="enable"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var userId = target.attr('data-user-id'); 
+        //var userId = target.data('userId'); //ovo ne moze zbog 
+        //alert(userId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#enable-warning-dialog').find('[name="id"]').val(userId);
+        $('#enable-warning-dialog').modal('show');
+    });
+    
+   $('#rows-table').on('click', '[data-action="resetpassword"]', function (e) {
+       
+       e.preventDefault();
+       e.stopPropagation();
+       
+       // calculate target element
+       var target = $(this).is('[data-action="resetpassword"]') ? $(this) : $(this).closest('[data-action="resetpassword"]');
+       
+       // get any attribute
+      var userId = target.attr('data-user-id');
+       
+       $('#resetpassword-warning-dialog').find('[name="id"]').val(userId);
+       
+       $('#resetpassword-warning-dialog').modal('show');
+       
+   });
+  
+    $('#rows-table').dataTable({
+        columnDefs: [
+            {targets: [0, 5], orderable: false, searchable: false}
+        ],
+        order: [
+                    [2, 'asc']
+                ],
+        lengthMenu: [3, 5, 10, 20, 50, 100]
+   });
+  
+  
+    <?php $this->inlineScript()->captureEnd(); ?>
+</script>

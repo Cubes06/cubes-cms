@@ -1,33 +1,32 @@
-    <?php
+<?php
 
-    class Admin_UsersController extends Zend_Controller_Action {
-
+    class Admin_ClientsController extends Zend_Controller_Action {
+        
         public function indexAction() {
-
+            
             $flashMessenger = $this->getHelper('FlashMessenger');
-
+            
             $systemMessages = array(
                 'success' => $flashMessenger->getMessages('success'),
                 'errors' => $flashMessenger->getMessages('errors')
             );
-
             
-            $cmsUsersDbTable = new Application_Model_DbTable_CmsUsers();
-            $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-            $users = $cmsUsersDbTable->search(array(
-                'filters' => array(
-                    'id_exclude' => $loggedInUser['id']
-                ),
-                'orders' => array(
-                    'first_name' => 'ASC'
-                ),
-                    //'limit' => 3,
-                    //'page' => 2
-            ));
-            $this->view->users = $users;
+            // prikaz svih client-a
+            $cmsClientsDbTable = new Application_Model_DbTable_CmsClients();
+            // $select jed objekat klase Zend_Db_Select
+            $select = $cmsClientsDbTable->select();
+            $select->order('order_number ASC');
+            
+            //debug za db select - vrace se sql upit
+            //die($select->assemble());
+                   
+            $clients = $cmsClientsDbTable->fetchAll($select);
+            
+            $this->view->clients = $clients;
             $this->view->systemMessages = $systemMessages;
         }
-
+        
+        
         public function addAction() {
             $request = $this->getRequest(); //podaci iz url-a iz forme sa koje dolazimo 
             $flashMessenger = $this->getHelper('FlashMessenger');  // za prenosenje sistemskih poruka
@@ -37,7 +36,7 @@
                 'errors' => $flashMessenger->getMessages('errors'),
             );
 
-            $form = new Application_Form_Admin_UserAdd();
+            $form = new Application_Form_Admin_ClientAdd();
             
             //default form data
             $form->populate(array(
@@ -50,29 +49,30 @@
                 try {
                     //check form is valid
                     if (!$form->isValid($request->getPost())) {
-                        throw new Application_Model_Exception_InvalidInput('Invalid data was sent for new user');
+                        throw new Application_Model_Exception_InvalidInput('Invalid data was sent for new client');
                     }
 
                     //get form data
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     
+                    //unset $formData['client_photo'];
                     
-                    $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
+                    $cmsClientsTable = new Application_Model_DbTable_CmsClients();
                     
-                    $userId = $cmsUsersTable->insertUser($formData);
+                    $cmsClientsTable->insertClient($formData);
                     
 
                     // do actual task
                     //save to database etc
                     
                     //set system message
-                    $flashMessenger->addMessage('User has been saved.', 'success');
+                    $flashMessenger->addMessage('Client has been saved.', 'success');
 
                     //redirect to same or another page
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
-                                'controller' => 'admin_users',
+                                'controller' => 'admin_clients',
                                 'action' => 'index'
                                 ), 'default', true);
                 } 
@@ -86,8 +86,6 @@
             $this->view->form = $form;
         }
         
-        
-        
         public function editAction() {
 		
 	    $request = $this->getRequest();
@@ -95,29 +93,17 @@
             $id = (int) $request->getParam('id'); //(int) pretvara slova u nule
             
             if ($id <= 0) {
-                throw new Zend_Controller_Router_Exception('Invalid user id: ' . $id, 404); // ovako prekidamo izvrsavanje programa i prikazujemo 'page not found'
+                throw new Zend_Controller_Router_Exception('Invalid client id: ' . $id, 404); // ovako prekidamo izvrsavanje programa i prikazujemo 'page not found'
             }
             
-            $loggedInUser = Zend_Auth::getInstance()->getIdentity();
+            $cmsClientsTable = new Application_Model_DbTable_CmsClients();
+            $client = $cmsClientsTable->getClientById($id);
             
-            if ($id == $loggedInUser['id']) {
-                //throw new Zend_Controller_Router_Exception('Go to edit profile page! ' . $id, 404);
-                $redirector = $this->getHelper('Redirector');
-                    $redirector->setExit(true)
-                            ->gotoRoute(array(
-                                'controller' => 'admin_profile',
-                                'action' => 'edit'
-                                ), 'default', true);
+            if (empty($client)) {
+                throw new Zend_Controller_Router_Exception('No client is found with id: ' . $id, 404);
             }
             
-            $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
-            $user = $cmsUsersTable->getUserById($id);
-            
-            if (empty($user)) {
-                throw new Zend_Controller_Router_Exception('No user is found with id: ' . $id, 404);
-            }
-            
-//            print_r($user);
+//            print_r($client);
 //            die();
             
             $flashMessenger = $this->getHelper('FlashMessenger');  // za prenosenje sistemskih poruka
@@ -127,10 +113,10 @@
                 'errors' => $flashMessenger->getMessages('errors'),
             );
 
-            $form = new Application_Form_Admin_UserEdit($id);
+            $form = new Application_Form_Admin_ClientAdd();
             
             //default form data
-            $form->populate($user); //$user je sam po sebi array
+            $form->populate($client); //$client je sam po sebi array
             
             
             // kad prvi put dolazimo onda je get method, a ako smo preko forme onda je post method
@@ -139,7 +125,7 @@
                 try {
                     //check form is valid
                     if (!$form->isValid($request->getPost())) {
-                        throw new Application_Model_Exception_InvalidInput('Invalid data was sent for user ');
+                        throw new Application_Model_Exception_InvalidInput('Invalid data was sent for client ');
                     }
 
                     //get form data
@@ -147,20 +133,20 @@
                     
                     
                     //radimo update postojeceg zapisa u tabeli
-                    $cmsUsersTable->updateUser($user['id'], $formData);
+                    $cmsClientsTable->updateClient($client['id'], $formData);
                     
 
                     // do actual task
                     //save to database etc
                     
                     //set system message
-                    $flashMessenger->addMessage('User has been updated.', 'success');
+                    $flashMessenger->addMessage('Client has been updated.', 'success');
 
                     //redirect to same or another page
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
-                                'controller' => 'admin_users',
+                                'controller' => 'admin_clients',
                                 'action' => 'index'
                                 ), 'default', true);
                 } 
@@ -173,14 +159,11 @@
             $this->view->systemMessages = $systemMessages;
             $this->view->form = $form;
             
-            $this->view->user = $user;
+            $this->view->client = $client;
             
 	}
         
-        
-        
-        
-        
+     
         public function deleteAction() {
             
             $request = $this->getRequest();
@@ -191,7 +174,7 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
@@ -202,34 +185,22 @@
                 $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
 
                 if ($id <= 0) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid user id: ' . $id);
+                    throw new Application_Model_Exception_InvalidInput('Invalid client id: ' . $id);
                 }
-                $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-                if ($id == $loggedInUser['id']) {
-                    //redirect user to edit profile page
+
+                $cmsClientsTable = new Application_Model_DbTable_CmsClients();
+                $client = $cmsClientsTable->getClientById($id);
+
+                if (empty($client)) {
+                    throw new Application_Model_Exception_InvalidInput('No client is found with id: ' . $id, 'errors');
+                }
+
+                $cmsClientsTable->deleteClient($id);
+                $flashMessenger->addMessage('Client ' . $client['first_name'] . ' ' . $client['last_name'] . ' has been deleted.', 'success');
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
-                                'controller' => 'admin_profile',
-                                'action' => 'edit'
-                                    ), 'default', true);
-                }
-                $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
-                $user = $cmsUsersTable->getUserById($id);
-
-                if (empty($user)) {
-                    throw new Application_Model_Exception_InvalidInput('No user is found with id: ' . $id, 'errors');
-                }
-                
-                $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-                
-
-                $cmsUsersTable->deleteUser($id);
-                $flashMessenger->addMessage('User ' . $user['first_name'] . ' ' . $user['last_name'] . ' has been deleted.', 'success');
-                    $redirector = $this->getHelper('Redirector');
-                    $redirector->setExit(true)
-                            ->gotoRoute(array(
-                                'controller' => 'admin_users',
+                                'controller' => 'admin_clients',
                                 'action' => 'index'
                                 ), 'default', true);
             } 
@@ -238,7 +209,7 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
@@ -256,7 +227,7 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
@@ -267,26 +238,22 @@
                 $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
 
                 if ($id <= 0) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid user id: ' . $id);
+                    throw new Application_Model_Exception_InvalidInput('Invalid client id: ' . $id);
                 }
 
-               
-                $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-                if ($id == $loggedInUser['id']) {
-                    //redirect user to edit profile page
-                    throw new Application_Model_Exception_InvalidInput('You can not disable your account!');
+                $cmsClientsTable = new Application_Model_DbTable_CmsClients();
+                $client = $cmsClientsTable->getClientById($id);
+
+                if (empty($client)) {
+                    throw new Application_Model_Exception_InvalidInput('No client is found with id: ' . $id, 'errors');
                 }
-                $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
-                $user = $cmsUsersTable->getUserById($id);
-                if (empty($user)) {
-                    throw new Application_Model_Exception_InvalidInput('No user is found with id: ' . $id);
-                }
-                $cmsUsersTable->disableUser($id);
-                $flashMessenger->addMessage('User ' . $user['first_name'] . ' ' . $user['last_name'] . ' has been disabled.', 'success');
+
+                $cmsClientsTable->disableClient($id);
+                $flashMessenger->addMessage('Client ' . $client['first_name'] . ' ' . $client['last_name'] . ' has been disabled.', 'success');
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
-                                'controller' => 'admin_users',
+                                'controller' => 'admin_clients',
                                 'action' => 'index'
                                 ), 'default', true);
             } 
@@ -295,7 +262,7 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
@@ -315,7 +282,7 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
@@ -326,27 +293,22 @@
                 $id = (int) $request->getPost('id'); // isto sto i read $_POST['id']
 
                 if ($id <= 0) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid user id: ' . $id);
-                }
-                $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-                if ($id == $loggedInUser['id']) {
-                    //redirect user to edit profile page
-                    throw new Application_Model_Exception_InvalidInput('You can not enable your account!');
+                    throw new Application_Model_Exception_InvalidInput('Invalid client id: ' . $id);
                 }
 
-                $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
-                $user = $cmsUsersTable->getUserById($id);
+                $cmsClientsTable = new Application_Model_DbTable_CmsClients();
+                $client = $cmsClientsTable->getClientById($id);
 
-                if (empty($user)) {
-                    throw new Application_Model_Exception_InvalidInput('No user is found with id: ' . $id, 'errors');
+                if (empty($client)) {
+                    throw new Application_Model_Exception_InvalidInput('No client is found with id: ' . $id, 'errors');
                 }
 
-                $cmsUsersTable->enableUser($id);
-                $flashMessenger->addMessage('User ' . $user['first_name'] . ' ' . $user['last_name'] . ' has been enabled.', 'success');
+                $cmsClientsTable->enableClient($id);
+                $flashMessenger->addMessage('Client ' . $client['first_name'] . ' ' . $client['last_name'] . ' has been enabled.', 'success');
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
-                                'controller' => 'admin_users',
+                                'controller' => 'admin_clients',
                                 'action' => 'index'
                                 ), 'default', true);
             } 
@@ -355,64 +317,79 @@
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
                             ), 'default', true);
             }
-    }
+            
 
-    public function resetpasswordAction() {
-        $request = $this->getRequest();
-
-        $flashMessenger = $this->getHelper('FlashMessenger');
-
-        $systemMessages = array(
-            'success' => $flashMessenger->getMessages('success'),
-            'errors' => $flashMessenger->getMessages('errors')
-        );
-        if ($request->isPost() && $request->getPost('task') === 'resetPassword') {
-            try {
-                // read $_POST['id]
-                $id = (int) $request->getPost('id');
-
-                if ($id <= 0) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid user id: ' . $id);
-                }
-                $loggedInUser = Zend_Auth::getInstance()->getIdentity();
-                if ($id == $loggedInUser['id']) {
-                    //redirect user to edit profile page
-                    throw new Application_Model_Exception_InvalidInput('You can not reset password for your account!');
-                }
-                $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
-
-                $user = $cmsUsersTable->getUserById($id);
-
-                if (empty($user)) {
-                    throw new Application_Model_Exception_InvalidInput('No user is found with id: ' . $id);
-                }
-
-                $cmsUsersTable->changeUserPassword($id, Application_Model_DbTable_CmsUsers::DEFAULT_PASSWORD);
-
-                $flashMessenger->addMessage('Password of user ' . $user['first_name'] . ' ' . $user['last_name'] . ' has been reset', 'success');
-
+            
+        }
+        
+        
+        public function updateorderAction() {
+            
+            $request = $this->getRequest();
+            
+            if (!$request->isPost() || $request->getPost('task') != 'saveOrder') {
+                // request is not post or task is not disable
+                // redirect to index page
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
-                                ), 'default', true);
-            } catch (Application_Model_Exception_InvalidInput $ex) {
+                            ), 'default', true);
+            }
+            
+            $flashMessenger = $this->getHelper('FlashMessenger'); 
+            
+            
+            try {
+                
+                $sortedIds = $request->getPost('sorted_ids');
+                
+                if (empty($sortedIds)) {
+                    throw new Application_Model_Exception_InvalidInput('Sorted ids are not sent.');
+                }
+                $sortedIds = trim($sortedIds, ' ,');
+                if (!preg_match('/^[0-9]+(,[0-9]+)*$/', $sortedIds)) {
+                    throw new Application_Model_Exception_InvalidInput('Invalid sorted ids: ' . $sortedIds);
+                }
+                
+                $sortedIds = explode(',', $sortedIds);
+                
+                
+                $cmsClientsTable = new Application_Model_DbTable_CmsClients();
+                
+                $cmsClientsTable->updateOrderOfClients($sortedIds);
+                
+                
+                $flashMessenger->addMessage('Order is successfully saved', 'success');
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_clients',
+                            'action' => 'index'
+                            ), 'default', true);
+            }
+            catch (Application_Model_Exception_InvalidInput $ex) {
                 $flashMessenger->addMessage($ex->getMessage(), 'errors');
                 $redirector = $this->getHelper('Redirector');
                 $redirector->setExit(true)
                         ->gotoRoute(array(
-                            'controller' => 'admin_users',
+                            'controller' => 'admin_clients',
                             'action' => 'index'
-                                ), 'default', true);
+                            ), 'default', true);
             }
+               
+            $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                            'controller' => 'admin_clients',
+                            'action' => 'index'
+                            ), 'default', true);          
         }
-        $this->view->systemMessages = $systemMessages;
-        $this->view->form = $form;
+        
     }
 
-}

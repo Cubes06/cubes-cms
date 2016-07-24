@@ -1,0 +1,317 @@
+<?php
+    $this->headTitle('Clients');
+?>
+
+<div class="page-header">
+    <h1>Clients</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <?php echo $this->systemMessagesHtml($this->systemMessages); ?>
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button data-action="save-order" class="btn btn-success" style="display: none;"><i class="glyphicon glyphicon-save" ></i> Save order</button>
+                    <button data-action="toggle-sort" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> Change order</button>
+                    <a 
+                        href=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'add'), 'default', true); ?>" type="button" 
+                        class="btn btn-default"
+                        ><i class="glyphicon glyphicon-plus"></i> Add client
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <table id="rows-table" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">Img</th>
+                            <th class="text-center">Status</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th class="text-center">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach ($this->clients as $client) { 
+                                if ($client['status'] == Application_Model_DbTable_CmsClients::STATUS_DISABLED) { ?>
+                                    <tr class="danger" data-client-id="<?php echo $this->escape($client['id']); ?>">
+                                        <td class="text-center"><i data-action="sort" class="glyphicon glyphicon-list" style="display: none; cursor: pointer"></i></td>
+                                        <td class="text-center"><img style="max-height: 24px;" src=" <?php echo $this->clientImgUrl($client); ?> "></td>
+                                        <td class="text-center"><span class="badge alert-danger" title="disabled"><i class="glyphicon glyphicon-remove"></i></span></td>
+                                        <td> <?php echo $this->escape($client['name']); ?> </td>
+                                        <td> <?php echo $this->escape($client['description']); ?> </td>
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'edit', 'id' => $client['id']), 'default', true) ?> "
+                                                    type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <button type="button" data-client-id=" <?php echo $this->escape($client['id']); ?> " data-action="enable" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                                                <button type="button" data-client-id=" <?php echo $this->escape($client['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php 
+                                }
+                                else { ?> 
+                                    <tr data-client-id="<?php echo $this->escape($client['id']); ?>">
+                                        <td class="text-center"><i data-action="sort" class="glyphicon glyphicon-list" style="display: none; cursor: pointer"></i></td>
+                                        <td class="text-center"><img style="max-height: 24px;" src=" <?php echo $this->clientImgUrl($client); ?> "></td>
+                                        <td class="text-center"><span class="badge alert-success" title="enabled"><i class="glyphicon glyphicon-ok"></i></span></td>
+                                        <td> <?php echo $this->escape($client['name']); ?> </td>
+                                        <td> <?php echo $this->escape($client['description']); ?> </td>
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                                <a 
+                                                    href=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'edit', 'id' => $client['id']), 'default', true) ?> "
+                                                    type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <button type="button" data-client-id=" <?php echo $this->escape($client['id']); ?> " data-action="disable" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
+                                                <button type="button" data-client-id=" <?php echo $this->escape($client['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                <?php } 
+                            }
+                        ?>
+                        
+                        
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'delete'), 'default', true) ?> " id="delete-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='delete'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete client</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete client?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'enable'), 'default', true) ?> " id="enable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='enable'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Enable client</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to enable client?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-check"></i>Enable</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'disable'), 'default', true) ?> " id="disable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+    <input type='hidden' name='task' value='disable'>
+    <input type='hidden' name='id' value="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Disable client</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to disable client?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Disable</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form><!-- /.modal -->
+
+<form method="post" action=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'updateorder'), 'default', true) ?> " style="display: none;" id="save-order-form">
+    <input type="hidden" name="task" value="saveOrder">
+    <input type="hidden" name="sorted_ids" value="">
+</form>
+
+
+<?php
+    $this->headLink()->appendStylesheet($this->baseUrl('/admin/bower_components/jquery-ui-1.12.0/jquery-ui.min.css'));
+    $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery-ui-1.12.0/jquery-ui.min.js'));
+?>
+
+<script> 
+    <?php $this->inlineScript()->captureStart(); ?>
+        
+//    DOM NODE
+//    \_Properties
+//        \_tagname
+//        \_class
+//    \_Data   (nesto custom sto mi hocemo da smestimo u dom [od HTML5])
+
+//funkcije za vadjenje: data, attr, prop
+    
+        
+        
+    $('#rows-table').on('click', '[data-action="delete"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="delete"]') ? $(this) : $(this).closest('[data-action="delete"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var clientId = target.attr('data-client-id'); 
+        //var clientId = target.data('client-id');
+        //alert(clientId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#delete-warning-dialog').find('[name="id"]').val(clientId);
+        $('#delete-warning-dialog').modal('show');
+    });
+    
+    
+    $('#rows-table').on('click', '[data-action="disable"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="disable"]') ? $(this) : $(this).closest('[data-action="disable"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var clientId = target.attr('data-client-id'); //ovako hvatamo bilo koji atribut (href, id, src...)
+        //var clientId = target.data('client-id'); //ovako hvatamo svaki data atribut ( i izostavljamo rec data ispred) i moraju da budu sve mala slova
+        
+        
+        
+        
+        //alert(clientId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#disable-warning-dialog').find('[name="id"]').val(clientId);
+        $('#disable-warning-dialog').modal('show');
+    });
+    
+    
+    $('#rows-table').on('click', '[data-action="enable"]', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //neki browseri ne ocitiju dobro klik na dugme pa se sledecom linijom to preventuje
+        var target = $(this).is('[data-action="enable"]') ? $(this) : $(this).closest('[data-action="enable"]');
+        
+        //dve verzije za vadjenje (od jQuery-a):
+        var clientId = target.attr('data-client-id'); 
+        //var clientId = target.data('clientId'); //ovo ne moze zbog 
+        //alert(clientId);              
+        
+        //.val() sluzi za dodeljivanje vrednosti poljima u formi
+        $('#enable-warning-dialog').find('[name="id"]').val(clientId);
+        $('#enable-warning-dialog').modal('show');
+    });
+    
+    
+    $('[data-action="toggle-sort"]').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+       
+        var target = $(this).is('[data-action="toggle-sort"]') ? $(this) : $(this).closest('[data-action="toggle-sort"]');
+        var sortableTbody = $('#rows-table > tbody');
+        
+        if (target.hasClass('active')) {
+            target.removeClass('active');
+            target.html('<i class="glyphicon glyphicon-list"></i> Change order');
+            // delete sortable functionallity
+            sortableTbody.sortable('destroy');
+            
+            // restore old html into tbody
+            sortableTbody.html(sortableTbody.data('oldHtml'));
+            
+            //hide "handle" for sorting, the icon in first column
+            sortableTbody.find('[data-action="sort"]').hide();
+            
+            //hide "Save-order"
+            $('[data-action="save-order"]').hide();
+        }
+        else {
+            target.addClass('active');
+            
+            //method html
+            target.html('<i class="glyphicon glyphicon-remove"></i> Cancel');  //override-uje ceo html...
+            
+            //save tbody html before sorting under key "oldHtml" into its data
+            sortableTbody.data('oldHtml', sortableTbody.html()); //kada navedemo dva atributa to je setovanje
+            
+            //initialize sortable functionality
+            sortableTbody.sortable({
+                handle: '[data-action = "sort"]'
+            });
+            
+            //show "handle" for sorting, the icon in first column
+            sortableTbody.find('[data-action="sort"]').show();
+            
+            //hide "Save-order"
+            $('[data-action="save-order"]').show();
+        }
+    });
+    
+    
+    
+    $('[data-action="save-order"]').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        var clientSortedIds = $('#rows-table > tbody').sortable('toArray', {
+            attribute: 'data-client-id'
+        });
+    
+        //find element with name "sorted_ids" in save order form and set its value
+        //  with string in which are sorted ids separated with comma(,)
+        //  ex. "12,3,8,10,11,6,2,1,9,7,5,4"
+        var saveOrderForm = $('#save-order-form');
+        
+        saveOrderForm.find('[name="sorted_ids"]').val(clientSortedIds.join(','));
+        //alert(clientSortedIds);
+        
+        //manually submit form by triggering "submit" event
+        saveOrderForm.trigger('submit');
+        
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <?php $this->inlineScript()->captureEnd(); ?>
+</script>

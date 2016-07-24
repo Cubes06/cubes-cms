@@ -1,0 +1,133 @@
+<?php
+    $this->headTitle('Clients - New Client');
+    
+    $form = $this->form;
+    $form->setElementDecorators(array('ViewHelper'));
+?>
+
+<div class="page-header">
+    <h1>Clients <small>New Client</small></h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <?php echo $this->systemMessagesHtml($this->systemMessages); ?>
+    </div>
+</div>
+
+
+
+<div class="row">
+    
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a 
+                        href=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'index'), 'default', true); ?>" type="button" 
+                        class="btn btn-default"
+                        ><i class="glyphicon glyphicon-chevron-left"></i> Back to all clients
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                
+                
+                <form class="form-horizontal" method="post" action="">
+                    <input type="hidden" name="task" value="save">
+                    
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>New Client</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="Name">Name</label>  
+                            <div class="col-md-4">
+                                <?php
+                                    echo $form->getElement('name')->setAttribs(array(
+                                        'class' => 'form-control input-md',
+                                        'placeholder' => 'Enter client\'s first name',
+                                        'id' => 'first_name',
+                                        'required' => 'required'
+                                    ));
+                                ?>
+                                <span class="help-block">min 3, max 255 characters</span>  
+                            </div>
+                            <div class="col-md-4">
+                                <?php if ($form->getElement('name')->hasErrors()) { ?>
+                                    <div class="has-error">
+                                        <?php foreach ($form->getElement('name')->getMessages() as $message) { ?>
+                                            <p class="help-block"><?php echo $this->escape($message); ?></p>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="description">Description</label>  
+                            <div class="col-md-4">
+                                <?php
+                                    echo $form->getElement('description')->setAttribs(array(
+                                        'class' => 'form-control input-md',
+                                        'placeholder' => 'Enter client\'s last name',
+                                        'id' => 'description'
+                                    ));
+                                ?>
+                                <span class="help-block">min 3, max 255 characters</span>  
+                            </div>
+                            <div class="col-md-4">
+                                <?php if ($form->getElement('description')->hasErrors()) { ?>
+                                    <div class="has-error">
+                                        <?php foreach ($form->getElement('description')->getMessages() as $message) { ?>
+                                            <p class="help-block"><?php echo $this->escape($message); ?></p>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+
+                       
+                         <!-- Image -->
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="client_photo">Photo</label>
+                            <div class="col-md-4"> 
+                                
+                                <input type="file" name="client_photo" id="client_photo" class="form-control  input-md">
+                                
+                            </div>
+                            <div class="col-md-4">
+                                 <?php if ($form->getElement('client_photo')->hasErrors()) { ?>
+                                    <div class="has-error">
+                                        <?php foreach ($form->getElement('client_photo')->getMessages() as $message) { ?>
+                                            <p class="help-block"><?php echo $this->escape($message); ?></p>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+
+                        
+
+                        <!-- Button (Double) -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="new_client_cancel"></label>
+                            <div class="col-md-4 text-right">
+                                <a href=" <?php echo $this->url(array('controller' => 'admin_clients', 'action' => 'index'), 'default', 'true'); ?> " id="new_client_cancel" name="new_client_cancel" class="btn btn-default" >Cancel</a>
+                                <button type="submit" id="new_client_submit" name="new_client_submit" class="btn btn-success">Save</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+

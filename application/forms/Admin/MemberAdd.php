@@ -35,6 +35,27 @@ class Application_Form_Admin_MemberAdd extends Zend_Form {
         $resume->addFilter('StringTrim')
                 ->setRequired(false);
         $this->addElement($resume);
+        
+        
+        //na nivou elementa, ako imamo true parametar, i oko izbaci gresku za tu validaciju i ne ispituje dalje 
+        $memberPhoto = new Zend_Form_Element_File('member_photo');
+        $memberPhoto->addValidator('Count', true, 1)//ogranicavamo broj fajlova koji se mogu uploud-ovati 
+                    ->addValidator('MimeType', true, array('image/jpeg', 'image/gif', 'image/png'))
+                    ->addValidator('ImageSize', false, array(
+                        'minwidth' => 150,
+                        'minheight' => 150,
+                        'maxwidth' => 2000,
+                        'maxheight' => 2000
+                    ))
+                    ->addValidator('Size', false, array(
+                        'max' => '10MB'
+                    ))
+                    // disable move file to destination when calling method getValues
+                    ->setValueDisabled(true)
+                    ->setRequired(false);
+        
+            $this->addElement($memberPhoto);
+        
     }
 
     
