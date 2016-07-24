@@ -6,11 +6,7 @@
             $clientImgFileName = $client['id'] . '.jpg';
             
             $clientImgFilePath = PUBLIC_PATH . "/uploads/clients/" . $clientImgFileName;
-            
-            //Helper ima propery view koji je Zend_View
-            //i preko kojeg pozivamo ostale view helpere
-            //na primer $this->view->baseUrl()
-            
+           
             
             if (is_file($clientImgFilePath)) {
                 return $this->view->baseUrl('/uploads/clients/' . $clientImgFileName);

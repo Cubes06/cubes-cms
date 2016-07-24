@@ -1,4 +1,6 @@
 <?php
+    
+    use Intervention\Image\ImageManagerStatic as Image;
 
     class Admin_MembersController extends Zend_Controller_Action {
         
@@ -113,7 +115,7 @@
                 'errors' => $flashMessenger->getMessages('errors'),
             );
 
-            $form = new Application_Form_Admin_MemberAdd();
+            $form = new Application_Form_Admin_ClientEdit();
             
             //default form data
             $form->populate($member); //$member je sam po sebi array

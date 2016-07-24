@@ -1,5 +1,7 @@
 <?php
 
+    use Intervention\Image\ImageManagerStatic as Image;
+
     class Admin_ClientsController extends Zend_Controller_Action {
         
         public function indexAction() {
@@ -28,64 +30,71 @@
         
         
         public function addAction() {
-            $request = $this->getRequest(); //podaci iz url-a iz forme sa koje dolazimo 
-            $flashMessenger = $this->getHelper('FlashMessenger');  // za prenosenje sistemskih poruka
+            $request = $this->getRequest();
 
+            $flashMessenger = $this->getHelper('FlashMessenger');
             $systemMessages = array(
                 'success' => $flashMessenger->getMessages('success'),
                 'errors' => $flashMessenger->getMessages('errors'),
             );
-
+            
             $form = new Application_Form_Admin_ClientAdd();
-            
-            //default form data
-            $form->populate(array(
-                
-            ));
-            
-            // kad prvi put dolazimo onda je get method, a ako smo preko forme onda je post method
-            if ($request->isPost() && $request->getPost('task') === 'save') {
 
+            if ($request->isPost() && $request->getPost('task') === 'save') {
                 try {
-                    //check form is valid
                     if (!$form->isValid($request->getPost())) {
                         throw new Application_Model_Exception_InvalidInput('Invalid data was sent for new client');
                     }
-
-                    //get form data
-                    $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
                     
-                    //unset $formData['client_photo'];
+                    $formData = $form->getValues();
+                    
+                    unset($formData['client_photo']);
                     
                     $cmsClientsTable = new Application_Model_DbTable_CmsClients();
                     
-                    $cmsClientsTable->insertClient($formData);
+                    $clientId = $cmsClientsTable->insertClient($formData);
                     
-
-                    // do actual task
-                    //save to database etc
-                    
+                    if ($form->getElement('client_photo')->isUploaded()) {
+                       
+                        $fileInfos = $form->getElement('client_photo')->getFileInfo('client_photo');
+                        $fileInfo = $fileInfos['client_photo'];
+                        
+                        try {
+                            //Open uploaded photo in temporary directory
+                            $clientPhoto = Image::make($fileInfo['tmp_name']);
+                            $clientPhoto->fit(170, 70);
+                            $clientPhoto->save(PUBLIC_PATH . '/uploads/clients/' . $clientId . '.jpg');
+                        } 
+                        catch (Exception $ex) {
+                            //set system message
+                            $flashMessenger->addMessage('Client has been saved but error occured during image proccessing.', 'errors');
+                            //redirect to same or another page
+                            $redirector = $this->getHelper('Redirector');
+                            $redirector->setExit(true)
+                                    ->gotoRoute(array(
+                                        'controller' => 'admin_clients',
+                                        'action' => 'edit',
+                                        'id' => $clientId
+                                            ), 'default', true);
+                        }
+                    }
                     //set system message
-                    $flashMessenger->addMessage('Client has been saved.', 'success');
-
+                    $flashMessenger->addMessage('Client has been successfully created.', 'success');
                     //redirect to same or another page
                     $redirector = $this->getHelper('Redirector');
                     $redirector->setExit(true)
                             ->gotoRoute(array(
                                 'controller' => 'admin_clients',
                                 'action' => 'index'
-                                ), 'default', true);
-                } 
-                catch (Application_Model_Exception_InvalidInput $ex) {
+                                    ), 'default', true);
+                } catch (Application_Model_Exception_InvalidInput $ex) {
                     $systemMessages['errors'][] = $ex->getMessage();
                 }
-                
             }
-
             $this->view->systemMessages = $systemMessages;
             $this->view->form = $form;
         }
-        
+
         public function editAction() {
 		
 	    $request = $this->getRequest();
@@ -113,7 +122,7 @@
                 'errors' => $flashMessenger->getMessages('errors'),
             );
 
-            $form = new Application_Form_Admin_ClientAdd();
+            $form = new Application_Form_Admin_ClientEdit();
             
             //default form data
             $form->populate($client); //$client je sam po sebi array
@@ -127,15 +136,33 @@
                     if (!$form->isValid($request->getPost())) {
                         throw new Application_Model_Exception_InvalidInput('Invalid data was sent for client ');
                     }
-
+                    
                     //get form data
                     $formData = $form->getValues(); // dobijamo filtrirane i validirane podatke
+                    unset($formData['client_photo']);
                     
+                    
+                        
+                    if ($form->getElement('client_photo')->isUploaded()) {
+                        $fileInfos = $form->getElement('client_photo')->getFileInfo('client_photo');
+                        $fileInfo = $fileInfos['client_photo'];
+
+                        try {
+                            //Open uploaded photo in temporary directory
+                            $clientPhotoEdit = Image::make($fileInfo['tmp_name']);
+
+                            $clientPhotoEdit->fit(170, 70);
+
+                            $clientPhotoEdit->save(PUBLIC_PATH . '/uploads/clients/' . $client['id'] . '.jpg');
+                        } 
+                        catch (Exception $ex) {
+                            throw new Application_Model_Exception_InvalidInput('Error occured during image proccessing.');
+                        }
+                    }
                     
                     //radimo update postojeceg zapisa u tabeli
                     $cmsClientsTable->updateClient($client['id'], $formData);
                     
-
                     // do actual task
                     //save to database etc
                     

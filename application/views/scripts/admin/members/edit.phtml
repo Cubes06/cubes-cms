@@ -158,6 +158,31 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="member_photo">Photo</label>
+                                <div class="col-md-4">
+                                    <div>
+                                        <a href="#" class="thumbnail">
+                                            <img src="<?php echo $this->memberImgUrl($this->member); ?>">
+                                        </a>
+                                    </div>
+
+                                    <input type="file" name="member_photo" id="member_photo" class="form-control input-md">
+                                    <span class="help-block">change photo</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <?php if ($form->getElement('member_photo')->hasErrors()) { ?>
+                                        <div class="has-error">
+                                            <?php foreach ($form->getElement('member_photo')->getMessages() as $message) { ?>
+                                                <p class="help-block"><?php echo $this->escape($message); ?></p>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            
+                            
                             <!-- Button (Double) -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="new_member_cancel"></label>
