@@ -1,3 +1,7 @@
+<?php
+    $this->headTitle('Clients');
+?>
+
 <div id="content">
     <div class="container">
 
@@ -11,36 +15,32 @@
             </h3>
             <!--Recommended image sizing: 170px & 70px-->
             <ul class="thumbnails list-unstyled row">
-                <li class="col-sm-2">
-                    <a title="" data-original-title="HTML 5" data-placement="top" class="_tooltip" href="#">
-                        <img alt="HTML 5" class="img-rounded" src="/uploads/clients/1.jpg">
-                    </a>
-                </li>
-                <li class="col-sm-2">
-                    <a title="" data-original-title="CSS 3" data-placement="top" class="_tooltip" href="#">
-                        <img alt="CSS 3" class="img-rounded" src="/uploads/clients/2.jpg">
-                    </a>
-                </li>
-                <li class="col-sm-2">
-                    <a title="" data-original-title="Git Hub" data-placement="top" class="_tooltip" href="#">
-                        <img alt="Git Hub" class="img-rounded" src="/uploads/clients/3.jpg">
-                    </a>
-                </li>
-                <li class="col-sm-2">
-                    <a title="" data-original-title="Amazon" data-placement="top" class="_tooltip" href="#">
-                        <img alt="Amazon" class="img-rounded" src="/uploads/clients/4.jpg">
-                    </a>
-                </li>
-                <li class="col-sm-2">
-                    <a title="" data-original-title="Android" data-placement="top" class="_tooltip" href="#">
-                        <img alt="Android" class="img-rounded" src="/uploads/clients/5.jpg">
-                    </a>
-                </li>
-                <li class="col-sm-2">
-                    <a title="" data-original-title="BBC" data-placement="top" class="_tooltip" href="#">
-                        <img alt="BBC" class="img-rounded" src="/uploads/clients/6.jpg">
-                    </a>
-                </li>
+                
+                
+                <?php
+                    $i = 0;
+                    foreach ($this->clients as $client) {
+                        if ($client['status'] == Application_Model_DbTable_CmsClients::STATUS_ENABLED) {
+                            if ($i % 4 === 0) { // kraj reda i prelazak u novi ?>  
+                                    </ul>
+                                </div>
+
+                                <div class="clients block">
+                                    <ul class="thumbnails list-unstyled row">
+                            <?php }
+                            $i++;
+                            $clientImgUrl = $this->clientImgUrl($client);
+                            ?>
+                            <li class="col-sm-3">
+                                <a title="" data-original-title=" <?php echo $this->escape($client['name']); ?> " data-placement="top" class="_tooltip" href="#">
+                                    <img alt=" <?php echo $this->escape($client['name']); ?> " class="img-rounded" src=" <?php echo $this->escape($clientImgUrl); ?> ">
+                                </a>
+                            </li>
+                        <?php } ?>
+                <?php } ?>
+                
+                
+                
             </ul>
         </div>
     </div>
