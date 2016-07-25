@@ -1,0 +1,96 @@
+<?php
+    //ovako disable-ujemo layout
+    Zend_Layout::getMvcInstance()->disableLayout();
+?>
+<!DOCTYPE html>
+<html>
+    
+    <head></head>
+    
+    <body>
+        
+        <h1>Choose your car brand/model</h1>
+        <form action="" method="post">
+            <p>
+                <label>Brand</label>
+                <select id="car-brand">
+                    <option value="">--- Choose Brand ---</option>
+                    
+                </select>
+            </p>
+            <p>
+                <label>Model</label>
+                <select id="car-model">
+                    <option value="">--- Choose Model ---</option>
+                </select>
+            </p>
+        </form>
+        <script src=" <?php echo $this->baseUrl('/admin/bower_components/jquery/dist/jquery.min.js'); ?> "></script>
+        <script>
+        
+            //$.ajax('/test.html', {});
+            
+            $('#car-brand').on('change', function(e) {
+                e.stopPropagation();
+                
+                var target = $(this).is('#car-brand') ? $(this) : $(this).closest('#car-brand');
+                
+                var brand = target.val();
+                
+                var modelSelect = $('#car-model');
+                //clear element inner html
+                modelSelect.empty();
+                modelSelect.append('<option value="">--- Choose Model ---</option>');
+                        
+                if (brand) {
+                    $.ajax({
+                        url: '/uploads/cars/' + brand + '.json',
+                        cache: false
+                    }).done(function(data) {
+                       
+                        for(var index in data) {
+                            var model = data[index];
+                            var selectOption = $('<option></option>'); 
+                            selectOption.attr('value', model.value);
+                            selectOption.html(model.label);
+
+                            modelSelect.append(selectOption); 
+                        }
+                    }).fail(function() {
+                        
+                    }).always(function() {
+                        
+                    });
+                }
+                
+            });
+         
+            
+            $.ajax({
+                url: "<?php echo $this->url(array('controller' => 'admin_test', 'action' => 'ajaxbrands'), 'default', true); ?>",
+                cache: false  //ne kesira zahtev
+            }).done(function(data, textStatus, jqXHR) {
+                for(var index in data) {
+                    var brand = data[index];
+                    var selectOption = $('<option></option>');  //ovo se cesto koristi
+                    selectOption.attr('value', brand.value);
+                    selectOption.html(brand.label);
+                    
+                    $('#car-brand').append(selectOption); 
+                }   
+                //on successful ajax page load
+                console.log(data);
+                //$('#car-brand').append(data);
+                
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                //on error while loading ajax page
+                alert('Error occured while loading car brands');
+            }).always(function() {
+                //for action that do not depend on result
+                
+            });
+            
+        </script>
+    </body>
+    
+</html>

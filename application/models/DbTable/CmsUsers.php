@@ -161,6 +161,7 @@
             return $this->fetchAll($select)->toArray();
         }
 
+        
         /**
          * 
          * @param array $filters See function search $parameters['filters']
