@@ -1,0 +1,27 @@
+<?php
+
+    $datatableJson = array(
+        'draw' => $this->draw,
+        'recordsTotal' => $this->usersTotal,
+        'recordsFiltered' => $this->usersFilteredCount,
+        'data' => array()
+    );
+    
+    
+    foreach ($this->users as $user) {
+        
+        $row = array();
+        
+        $row[] = $user['status'];
+        $row[] = $user['username'];
+        $row[] = $user['first_name'];
+        $row[] = $user['last_name'];
+        $row[] = $user['email'];
+        $row[] = '';
+        
+        $datatableJson['data'][] = $row;
+        
+    }
+    
+    //send JSON from view script (disables layout, and set the Content-Type header to application/json
+    echo $this->json($datatableJson);

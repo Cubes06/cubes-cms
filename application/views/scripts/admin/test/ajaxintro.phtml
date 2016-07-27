@@ -44,7 +44,11 @@
                         
                 if (brand) {
                     $.ajax({
-                        url: '/uploads/cars/' + brand + '.json',
+                        url: '<?php echo $this->url(array('controller' => 'admin_test', 'action' => 'ajaxmodels'), 'default', true); ?>',
+                        data: {
+                            'brand': brand
+                        },
+                        //method: "post"
                         cache: false
                     }).done(function(data) {
                        
@@ -70,7 +74,7 @@
                 url: "<?php echo $this->url(array('controller' => 'admin_test', 'action' => 'ajaxbrands'), 'default', true); ?>",
                 cache: false  //ne kesira zahtev
             }).done(function(data, textStatus, jqXHR) {
-                for(var index in data) {
+                for (var index in data) {
                     var brand = data[index];
                     var selectOption = $('<option></option>');  //ovo se cesto koristi
                     selectOption.attr('value', brand.value);

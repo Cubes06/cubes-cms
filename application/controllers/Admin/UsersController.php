@@ -27,6 +27,7 @@
             $this->view->users = $users;
             $this->view->systemMessages = $systemMessages;
         }
+        
 
         public function addAction() {
             $request = $this->getRequest(); //podaci iz url-a iz forme sa koje dolazimo 
@@ -85,7 +86,6 @@
             $this->view->systemMessages = $systemMessages;
             $this->view->form = $form;
         }
-        
         
         
         public function editAction() {
@@ -176,9 +176,6 @@
             $this->view->user = $user;
             
 	}
-        
-        
-        
         
         
         public function deleteAction() {
@@ -360,8 +357,9 @@
                             ), 'default', true);
             }
     }
+    
 
-    public function resetpasswordAction() {
+        public function resetpasswordAction() {
         $request = $this->getRequest();
 
         $flashMessenger = $this->getHelper('FlashMessenger');
@@ -414,5 +412,114 @@
         $this->view->systemMessages = $systemMessages;
         $this->view->form = $form;
     }
+    
+    
+        public function datatableAction() {
+        
+            $request = $this->getRequest();
+
+            $datatableParameteres = $request->getParams();
+
+    //        print_r($datatableParameteres);
+    //        die();
+
+            /*
+            Array
+                (
+                    [controller] => admin_users
+                    [action] => datatable
+                    [module] => default
+                    [draw] => 1
+
+
+                    [order] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [column] => 2
+                                    [dir] => asc
+                                )
+
+                        )
+
+                    [start] => 0
+                    [length] => 3
+                    [search] => Array
+                        (
+                            [value] => 
+                            [regex] => false
+                        )
+
+
+                )
+             */
+
+
+            $cmsUsersTable = new Application_Model_DbTable_CmsUsers();
+
+            $loggedInUser = Zend_Auth::getInstance()->getIdentity();
+
+            $filters = array(
+                'id_exclude' => $loggedInUser
+            );
+
+            $orders = array();
+            $limit = 5;
+            $page = 1;
+            $draw = 1;
+            
+            $columns = array('status', 'username', 'first_name', 'last_name', 'email');
+
+            //Proccess datatable parameters
+
+            if (isset($datatableParameteres['draw'])) {
+                
+                $draw = $datatableParameteres['draw'];
+                
+                if (isset($datatableParameteres['length'])) {
+                    //limit rows per page
+                    $limit = $datatableParameteres['length'];
+                    
+                    if (isset($datatableParameteres['start'])) {
+                        $page = floor($datatableParameteres['start'] / $datatableParameteres['length']) + 1;
+                    }
+                    
+                }
+                
+                if (isset($datatableParameteres['order']) && is_array($datatableParameteres['order'])) {
+                    foreach ($datatableParameteres['order'] as $datatableOrder) {
+                        $columnIndex = $datatableOrder['column'];
+                        $orderDirection = strtoupper($datatableOrder['dir']);
+                        
+                        if (isset($columns[$columnIndex])) {
+                            $orders[$columns[$columnIndex]] = $orderDirection;
+                        }
+                        
+                    }
+                }
+                
+                if (isset($datatableParameteres['search']) && is_array($datatableParameteres['search']) && isset($datatableParameteres['search']['value'])) {
+                    $filters['username_search'] = $datatableParameteres['search']['value'];
+                }
+                
+            }
+
+            $users = $cmsUsersTable->search(array(
+                'filters' => $filters,
+                'orders' => $orders,
+                'limit' => $limit,
+                'page' => $page
+            ));
+
+            $usersFilteredCount = $cmsUsersTable->count($filters);
+            $usersTotal = $cmsUsersTable->count();
+
+            $this->view->users = $users;
+            $this->view->usersFilteredCount = $usersFilteredCount;
+            $this->view->usersTotal = $usersTotal;
+            $this->view->draw = $draw;
+            $this->view->columns = $columns;
+        
+        }
 
 }

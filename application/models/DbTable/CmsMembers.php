@@ -74,7 +74,23 @@
          * @param int $id ID of member to delete
          */
         public function deleteMember($id) {
+		
+            $memberPhotoFilePath = PUBLIC_PATH . '/uploads/members/' . $id . '.jpg';
+            if (is_file($memberPhotoFilePath)) {
+                //delete member photo file
+                unlink($memberPhotoFilePath);
+            }
+            
+            //member who is going to be deleted
+            $member = $this->getMemberById($id);
+
+            $this->update(array(
+                    'order_number' => new Zend_Db_Expr('order_number - 1')
+            ),
+            'order_number > ' . $member['order_number']);
+
             $this->delete('id = ' . $id);
+	
         }
         
         /**
