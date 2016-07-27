@@ -468,7 +468,7 @@
             $page = 1;
             $draw = 1;
             
-            $columns = array('status', 'username', 'first_name', 'last_name', 'email');
+            $columns = array('status', 'username', 'first_name', 'last_name', 'email','actions');
 
             //Proccess datatable parameters
 

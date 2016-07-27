@@ -12,13 +12,54 @@
         
         $row = array();
         
-        $row[] = $user['status'];
-        $row[] = $user['username'];
-        $row[] = $user['first_name'];
-        $row[] = $user['last_name'];
-        $row[] = $user['email'];
-        $row[] = '';
-        
+        foreach ($this->columns as $columnName) {
+            if ($columnName == 'status') {
+                if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_ENABLED) {
+                    $row[] = '<span class="badge alert-success" title="enabled"><i class="glyphicon glyphicon-ok"></i></span>';
+                }
+                else {
+                    $row[] = '<span class="badge alert-danger" title="disabled"><i class="glyphicon glyphicon-remove"></i></span>';
+                }
+            }
+            else if ($columnName == 'actions') {
+                $this->placeholder('actions')->exchangeArray(array());
+                
+                $this->placeholder('actions')->captureStart();
+                
+                if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_ENABLED) {
+                    ?>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                            <a 
+                                href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
+                                type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="disable" class="btn btn-default" title="disabled"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="resetpassword" class="btn btn-default" title="reset password"><i class="fa fa-unlock-alt"></i></button>
+                        </div>
+                    <?php
+                }
+                else {
+                    ?>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                            <a 
+                                href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
+                                type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="enable" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="delete" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
+                            <button type="button" data-user-id=" <?php echo $this->escape($user['id']); ?> " data-action="resetpassword" class="btn btn-default" title="reset password"><i class="fa fa-unlock-alt"></i></button>
+                        </div>
+                    <?php
+                }
+                
+                $this->placeholder('actions')->captureEnd();
+                
+                $row[] = $this->placeholder('actions')->toString();
+            }
+            else {
+                $row[] = $user[$columnName];
+            }
+        }
+       
         $datatableJson['data'][] = $row;
         
     }
